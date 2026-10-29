@@ -1,0 +1,2782 @@
+{
+ "meta": {
+  "retrieved": "2026-10-29",
+  "n_people": 200835,
+  "n_birthplaces": 13397,
+  "n_coarse_people": 19908,
+  "n_nocoord_people": 241,
+  "n_multi_birthplace": 1072,
+  "n_in_town": 166586,
+  "n_hospital_people": 242,
+  "sc_unmatched": 20,
+  "sc_unmatched_pop": 54560,
+  "ni_unmatched": 9,
+  "ni_unmatched_pop": 10359,
+  "radius_fit": [
+   0.4516688446572389,
+   -4.191705282321812
+  ],
+  "pv_days": 30,
+  "pv_start": "2026-09-29",
+  "pv_end": "2026-10-28",
+  "pv_n": 21191
+ },
+ "overview": {
+  "n_people": 200835,
+  "n_placed": 166586,
+  "share_placed": 0.829,
+  "n_coarse": 19908,
+  "n_nocoord": 241,
+  "n_rural": 10089,
+  "n_outside": 4014,
+  "n_towns": 4979,
+  "n_towns_with": 3869,
+  "pop_total": 61590925,
+  "n_multi_birthplace": 1072,
+  "n_hospital": 242,
+  "n_female": 35832,
+  "n_male": 163990,
+  "n_sex_other": 231,
+  "n_sex_missing": 782,
+  "n_year_missing": 6878,
+  "n_with_enwiki": 159443,
+  "sitelinks_median": 3,
+  "n_sl20": 7046,
+  "n_sl50": 1121,
+  "rate_uk": 27.0,
+  "share_female_known": 0.179
+ },
+ "towns_by_nation": {
+  "England": {
+   "n": 3765,
+   "pop": 52594012,
+   "src": "ONS Census 2021 (LSOAs best-fitted to BUA22)"
+  },
+  "Northern Ireland": {
+   "n": 212,
+   "pop": 1432228,
+   "src": "NISRA Census 2021 (settlement)"
+  },
+  "Scotland": {
+   "n": 636,
+   "pop": 4920110,
+   "src": "NRS mid-2020 locality estimate"
+  },
+  "Wales": {
+   "n": 366,
+   "pop": 2644575,
+   "src": "ONS Census 2021 (LSOAs best-fitted to BUA22)"
+  }
+ },
+ "coarse_top": {
+  "England": 4522,
+  "United Kingdom": 2041,
+  "Scotland": 1947,
+  "Wales": 940,
+  "Yorkshire": 581,
+  "Surrey": 492,
+  "Kent": 481,
+  "Lambeth": 406
+ },
+ "per_head": {
+  "big": [
+   {
+    "name": "Edinburgh",
+    "nation": "Scotland",
+    "pop": 506520,
+    "n": 3870,
+    "rate": 76.4,
+    "n_pre1900": 1774,
+    "rate_pre1900": 35.0,
+    "n_since1950": 1091,
+    "rate_since1950": 21.5,
+    "top": "Arthur Conan Doyle"
+   },
+   {
+    "name": "Glasgow",
+    "nation": "Scotland",
+    "pop": 632350,
+    "n": 4763,
+    "rate": 75.3,
+    "n_pre1900": 1331,
+    "rate_pre1900": 21.0,
+    "n_since1950": 1823,
+    "rate_since1950": 28.8,
+    "top": "Alex Ferguson"
+   },
+   {
+    "name": "Belfast",
+    "nation": "Northern Ireland",
+    "pop": 293298,
+    "n": 2081,
+    "rate": 71.0,
+    "n_pre1900": 398,
+    "rate_pre1900": 13.6,
+    "n_since1950": 925,
+    "rate_since1950": 31.5,
+    "top": "C. S. Lewis"
+   },
+   {
+    "name": "Liverpool",
+    "nation": "England",
+    "pop": 503714,
+    "n": 3542,
+    "rate": 70.3,
+    "n_pre1900": 1101,
+    "rate_pre1900": 21.9,
+    "n_since1950": 1378,
+    "rate_since1950": 27.4,
+    "top": "John Lennon"
+   },
+   {
+    "name": "Oxford",
+    "nation": "England",
+    "pop": 166279,
+    "n": 1112,
+    "rate": 66.9,
+    "n_pre1900": 280,
+    "rate_pre1900": 16.8,
+    "n_since1950": 532,
+    "rate_since1950": 32.0,
+    "top": "Stephen Hawking"
+   },
+   {
+    "name": "Paisley",
+    "nation": "Scotland",
+    "pop": 77270,
+    "n": 506,
+    "rate": 65.5,
+    "n_pre1900": 159,
+    "rate_pre1900": 20.6,
+    "n_since1950": 209,
+    "rate_since1950": 27.0,
+    "top": "James Peace"
+   },
+   {
+    "name": "Manchester",
+    "nation": "England",
+    "pop": 469193,
+    "n": 3065,
+    "rate": 65.3,
+    "n_pre1900": 879,
+    "rate_pre1900": 18.7,
+    "n_since1950": 1322,
+    "rate_since1950": 28.2,
+    "top": "Joseph John Thomson"
+   },
+   {
+    "name": "Aberdeen",
+    "nation": "Scotland",
+    "pop": 198590,
+    "n": 1201,
+    "rate": 60.5,
+    "n_pre1900": 547,
+    "rate_pre1900": 27.5,
+    "n_since1950": 334,
+    "rate_since1950": 16.8,
+    "top": "Annie Lennox"
+   },
+   {
+    "name": "Bath",
+    "nation": "England",
+    "pop": 95048,
+    "n": 571,
+    "rate": 60.1,
+    "n_pre1900": 286,
+    "rate_pre1900": 30.1,
+    "n_since1950": 184,
+    "rate_since1950": 19.4,
+    "top": "Tyrone Mings"
+   },
+   {
+    "name": "Dundee",
+    "nation": "Scotland",
+    "pop": 148210,
+    "n": 814,
+    "rate": 54.9,
+    "n_pre1900": 275,
+    "rate_pre1900": 18.6,
+    "n_since1950": 299,
+    "rate_since1950": 20.2,
+    "top": "Brian Cox"
+   }
+  ],
+  "big_low": [
+   {
+    "name": "Castlereagh",
+    "nation": "Northern Ireland",
+    "pop": 58763,
+    "n": 2,
+    "rate": 0.3,
+    "n_pre1900": 2,
+    "rate_pre1900": 0.3,
+    "n_since1950": 0,
+    "rate_since1950": 0.0,
+    "top": "Daniel O'Neill"
+   },
+   {
+    "name": "Gillingham (Medway)",
+    "nation": "England",
+    "pop": 109217,
+    "n": 7,
+    "rate": 0.6,
+    "n_pre1900": 2,
+    "rate_pre1900": 0.2,
+    "n_since1950": 3,
+    "rate_since1950": 0.3,
+    "top": "Alban Harrison"
+   },
+   {
+    "name": "Kingswood and Fishponds",
+    "nation": "England",
+    "pop": 154915,
+    "n": 31,
+    "rate": 2.0,
+    "n_pre1900": 18,
+    "rate_pre1900": 1.2,
+    "n_since1950": 6,
+    "rate_since1950": 0.4,
+    "top": "W. G. Grace"
+   },
+   {
+    "name": "Cumbernauld",
+    "nation": "Scotland",
+    "pop": 50530,
+    "n": 17,
+    "rate": 3.4,
+    "n_pre1900": 4,
+    "rate_pre1900": 0.8,
+    "n_since1950": 7,
+    "rate_since1950": 1.4,
+    "top": "Clementina Maude, Viscountess Hawarden"
+   },
+   {
+    "name": "Corby",
+    "nation": "England",
+    "pop": 67661,
+    "n": 23,
+    "rate": 3.4,
+    "n_pre1900": 2,
+    "rate_pre1900": 0.3,
+    "n_since1950": 14,
+    "rate_since1950": 2.1,
+    "top": "Brendan Coyle"
+   },
+   {
+    "name": "Bloxwich",
+    "nation": "England",
+    "pop": 51946,
+    "n": 18,
+    "rate": 3.5,
+    "n_pre1900": 7,
+    "rate_pre1900": 1.3,
+    "n_since1950": 4,
+    "rate_since1950": 0.8,
+    "top": "Charlie Athersmith"
+   },
+   {
+    "name": "Newtownabbey",
+    "nation": "Northern Ireland",
+    "pop": 67599,
+    "n": 24,
+    "rate": 3.6,
+    "n_pre1900": 1,
+    "rate_pre1900": 0.1,
+    "n_since1950": 12,
+    "rate_since1950": 1.8,
+    "top": "Stephen Boyd"
+   },
+   {
+    "name": "Bracknell",
+    "nation": "England",
+    "pop": 78966,
+    "n": 29,
+    "rate": 3.7,
+    "n_pre1900": 6,
+    "rate_pre1900": 0.8,
+    "n_since1950": 20,
+    "rate_since1950": 2.5,
+    "top": "Millie Brady"
+   },
+   {
+    "name": "Milton Keynes",
+    "nation": "England",
+    "pop": 183498,
+    "n": 70,
+    "rate": 3.8,
+    "n_pre1900": 5,
+    "rate_pre1900": 0.3,
+    "n_since1950": 64,
+    "rate_since1950": 3.5,
+    "top": "Dele Alli"
+   },
+   {
+    "name": "Clacton-on-Sea",
+    "nation": "England",
+    "pop": 53197,
+    "n": 21,
+    "rate": 3.9,
+    "n_pre1900": 2,
+    "rate_pre1900": 0.4,
+    "n_since1950": 11,
+    "rate_since1950": 2.1,
+    "top": "Paul Banks"
+   }
+  ],
+  "mid": [
+   {
+    "name": "Bellshill",
+    "nation": "Scotland",
+    "pop": 19700,
+    "n": 292,
+    "rate": 148.2,
+    "n_pre1900": 18,
+    "rate_pre1900": 9.1,
+    "n_since1950": 217,
+    "rate_since1950": 110.2,
+    "top": "David MacMillan"
+   },
+   {
+    "name": "Carmarthen",
+    "nation": "Wales",
+    "pop": 15380,
+    "n": 220,
+    "rate": 143.0,
+    "n_pre1900": 75,
+    "rate_pre1900": 48.8,
+    "n_since1950": 111,
+    "rate_since1950": 72.2,
+    "top": "Joe Allen"
+   },
+   {
+    "name": "Bangor",
+    "nation": "Wales",
+    "pop": 16994,
+    "n": 229,
+    "rate": 134.8,
+    "n_pre1900": 43,
+    "rate_pre1900": 25.3,
+    "n_since1950": 115,
+    "rate_since1950": 67.7,
+    "top": "Duffy"
+   },
+   {
+    "name": "Aberystwyth",
+    "nation": "Wales",
+    "pop": 14168,
+    "n": 177,
+    "rate": 124.9,
+    "n_pre1900": 61,
+    "rate_pre1900": 43.1,
+    "n_since1950": 77,
+    "rate_since1950": 54.3,
+    "top": "Roger Rees"
+   },
+   {
+    "name": "Chertsey",
+    "nation": "England",
+    "pop": 11612,
+    "n": 114,
+    "rate": 98.2,
+    "n_pre1900": 24,
+    "rate_pre1900": 20.7,
+    "n_since1950": 73,
+    "rate_since1950": 62.9,
+    "top": "Seretse Khama Ian Khama"
+   },
+   {
+    "name": "Enniskillen",
+    "nation": "Northern Ireland",
+    "pop": 14086,
+    "n": 138,
+    "rate": 98.0,
+    "n_pre1900": 62,
+    "rate_pre1900": 44.0,
+    "n_since1950": 47,
+    "rate_since1950": 33.4,
+    "top": "Kyle Lafferty"
+   },
+   {
+    "name": "Armagh",
+    "nation": "Northern Ireland",
+    "pop": 16310,
+    "n": 153,
+    "rate": 93.8,
+    "n_pre1900": 86,
+    "rate_pre1900": 52.7,
+    "n_since1950": 34,
+    "rate_since1950": 20.8,
+    "top": "Ian Paisley"
+   },
+   {
+    "name": "Dumbarton",
+    "nation": "Scotland",
+    "pop": 20480,
+    "n": 190,
+    "rate": 92.8,
+    "n_pre1900": 93,
+    "rate_pre1900": 45.4,
+    "n_since1950": 30,
+    "rate_since1950": 14.6,
+    "top": "Jackie Stewart"
+   },
+   {
+    "name": "Caernarfon",
+    "nation": "Wales",
+    "pop": 10079,
+    "n": 91,
+    "rate": 90.3,
+    "n_pre1900": 46,
+    "rate_pre1900": 45.6,
+    "n_since1950": 14,
+    "rate_since1950": 13.9,
+    "top": "Edward II of England"
+   },
+   {
+    "name": "Hexham",
+    "nation": "England",
+    "pop": 10378,
+    "n": 92,
+    "rate": 88.6,
+    "n_pre1900": 23,
+    "rate_pre1900": 22.2,
+    "n_since1950": 49,
+    "rate_since1950": 47.2,
+    "top": "Fraser Forster"
+   }
+  ],
+  "small": [
+   {
+    "name": "Dolgellau",
+    "nation": "Wales",
+    "pop": 2600,
+    "n": 78,
+    "rate": 300.0,
+    "n_pre1900": 54,
+    "rate_pre1900": 207.7,
+    "n_since1950": 7,
+    "rate_since1950": 26.9,
+    "top": "Elfyn Evans"
+   },
+   {
+    "name": "St Asaph",
+    "nation": "Wales",
+    "pop": 3484,
+    "n": 89,
+    "rate": 255.5,
+    "n_pre1900": 16,
+    "rate_pre1900": 45.9,
+    "n_since1950": 64,
+    "rate_since1950": 183.7,
+    "top": "Ian Rush"
+   },
+   {
+    "name": "Cuckfield",
+    "nation": "England",
+    "pop": 3067,
+    "n": 70,
+    "rate": 228.2,
+    "n_pre1900": 4,
+    "rate_pre1900": 13.0,
+    "n_since1950": 54,
+    "rate_since1950": 176.1,
+    "top": "Tara Fitzgerald"
+   },
+   {
+    "name": "Blaenau Ffestiniog",
+    "nation": "Wales",
+    "pop": 2809,
+    "n": 56,
+    "rate": 199.4,
+    "n_pre1900": 31,
+    "rate_pre1900": 110.4,
+    "n_since1950": 6,
+    "rate_since1950": 21.4,
+    "top": "Gwyn Thomas"
+   },
+   {
+    "name": "Eton",
+    "nation": "England",
+    "pop": 3173,
+    "n": 59,
+    "rate": 185.9,
+    "n_pre1900": 34,
+    "rate_pre1900": 107.2,
+    "n_since1950": 10,
+    "rate_since1950": 31.5,
+    "top": "William Oughtred"
+   },
+   {
+    "name": "Machynlleth",
+    "nation": "Wales",
+    "pop": 2161,
+    "n": 36,
+    "rate": 166.6,
+    "n_pre1900": 29,
+    "rate_pre1900": 134.2,
+    "n_since1950": 3,
+    "rate_since1950": 13.9,
+    "top": "Gareth Glyn"
+   },
+   {
+    "name": "Llanberis",
+    "nation": "Wales",
+    "pop": 2009,
+    "n": 28,
+    "rate": 139.4,
+    "n_pre1900": 18,
+    "rate_pre1900": 89.6,
+    "n_since1950": 3,
+    "rate_since1950": 14.9,
+    "top": "T. Rowland Hughes"
+   },
+   {
+    "name": "Taplow",
+    "nation": "England",
+    "pop": 2390,
+    "n": 30,
+    "rate": 125.5,
+    "n_pre1900": 6,
+    "rate_pre1900": 25.1,
+    "n_since1950": 22,
+    "rate_since1950": 92.1,
+    "top": "Brion Gysin"
+   },
+   {
+    "name": "Cardigan",
+    "nation": "Wales",
+    "pop": 4218,
+    "n": 51,
+    "rate": 120.9,
+    "n_pre1900": 28,
+    "rate_pre1900": 66.4,
+    "n_since1950": 17,
+    "rate_since1950": 40.3,
+    "top": "Brioc"
+   },
+   {
+    "name": "Llanidloes",
+    "nation": "Wales",
+    "pop": 2784,
+    "n": 32,
+    "rate": 114.9,
+    "n_pre1900": 21,
+    "rate_pre1900": 75.4,
+    "n_since1950": 3,
+    "rate_since1950": 10.8,
+    "top": "Richard Gwyn"
+   }
+  ],
+  "n_big": 192,
+  "n_mid": 783,
+  "big_median": 24.6,
+  "mid_median": 11.8,
+  "famous20": [
+   {
+    "name": "Windsor",
+    "nation": "England",
+    "pop": 31905,
+    "n_sl20": 26,
+    "rate20": 81.5,
+    "top": "Edward III of England"
+   },
+   {
+    "name": "Oxford",
+    "nation": "England",
+    "pop": 166279,
+    "n_sl20": 52,
+    "rate20": 31.3,
+    "top": "Stephen Hawking"
+   },
+   {
+    "name": "Chichester",
+    "nation": "England",
+    "pop": 32061,
+    "n_sl20": 10,
+    "rate20": 31.2,
+    "top": "Tom Odell"
+   },
+   {
+    "name": "Dunfermline",
+    "nation": "Scotland",
+    "pop": 54990,
+    "n_sl20": 17,
+    "rate20": 30.9,
+    "top": "Andrew Carnegie"
+   },
+   {
+    "name": "Cambridge",
+    "nation": "England",
+    "pop": 149510,
+    "n_sl20": 41,
+    "rate20": 27.4,
+    "top": "John Maynard Keynes"
+   },
+   {
+    "name": "Stirling",
+    "nation": "Scotland",
+    "pop": 37910,
+    "n_sl20": 10,
+    "rate20": 26.4,
+    "top": "James III of Scotland"
+   },
+   {
+    "name": "Irvine",
+    "nation": "Scotland",
+    "pop": 34130,
+    "n_sl20": 9,
+    "rate20": 26.4,
+    "top": "Nicola Sturgeon"
+   },
+   {
+    "name": "Liverpool",
+    "nation": "England",
+    "pop": 503714,
+    "n_sl20": 129,
+    "rate20": 25.6,
+    "top": "John Lennon"
+   },
+   {
+    "name": "Perth",
+    "nation": "Scotland",
+    "pop": 47350,
+    "n_sl20": 12,
+    "rate20": 25.3,
+    "top": "Ewan McGregor"
+   },
+   {
+    "name": "London",
+    "nation": "England",
+    "pop": 8777371,
+    "n_sl20": 2172,
+    "rate20": 24.7,
+    "top": "Charlie Chaplin"
+   }
+  ]
+ },
+ "per_head_era": {
+  "mid_pre1900": [
+   {
+    "name": "Armagh",
+    "nation": "Northern Ireland",
+    "pop": 16310,
+    "n": 153,
+    "rate": 93.8,
+    "n_pre1900": 86,
+    "rate_pre1900": 52.7,
+    "n_since1950": 34,
+    "rate_since1950": 20.8,
+    "top": "Ian Paisley"
+   },
+   {
+    "name": "Carmarthen",
+    "nation": "Wales",
+    "pop": 15380,
+    "n": 220,
+    "rate": 143.0,
+    "n_pre1900": 75,
+    "rate_pre1900": 48.8,
+    "n_since1950": 111,
+    "rate_since1950": 72.2,
+    "top": "Joe Allen"
+   },
+   {
+    "name": "Montrose",
+    "nation": "Scotland",
+    "pop": 11730,
+    "n": 80,
+    "rate": 68.2,
+    "n_pre1900": 55,
+    "rate_pre1900": 46.9,
+    "n_since1950": 7,
+    "rate_since1950": 6.0,
+    "top": "Robert Brown"
+   },
+   {
+    "name": "Caernarfon",
+    "nation": "Wales",
+    "pop": 10079,
+    "n": 91,
+    "rate": 90.3,
+    "n_pre1900": 46,
+    "rate_pre1900": 45.6,
+    "n_since1950": 14,
+    "rate_since1950": 13.9,
+    "top": "Edward II of England"
+   },
+   {
+    "name": "Dumbarton",
+    "nation": "Scotland",
+    "pop": 20480,
+    "n": 190,
+    "rate": 92.8,
+    "n_pre1900": 93,
+    "rate_pre1900": 45.4,
+    "n_since1950": 30,
+    "rate_since1950": 14.6,
+    "top": "Jackie Stewart"
+   },
+   {
+    "name": "Enniskillen",
+    "nation": "Northern Ireland",
+    "pop": 14086,
+    "n": 138,
+    "rate": 98.0,
+    "n_pre1900": 62,
+    "rate_pre1900": 44.0,
+    "n_since1950": 47,
+    "rate_since1950": 33.4,
+    "top": "Kyle Lafferty"
+   },
+   {
+    "name": "Aberystwyth",
+    "nation": "Wales",
+    "pop": 14168,
+    "n": 177,
+    "rate": 124.9,
+    "n_pre1900": 61,
+    "rate_pre1900": 43.1,
+    "n_since1950": 77,
+    "rate_since1950": 54.3,
+    "top": "Roger Rees"
+   },
+   {
+    "name": "St Andrews",
+    "nation": "Scotland",
+    "pop": 18410,
+    "n": 140,
+    "rate": 76.0,
+    "n_pre1900": 68,
+    "rate_pre1900": 36.9,
+    "n_since1950": 34,
+    "rate_since1950": 18.5,
+    "top": "Old Tom Morris"
+   },
+   {
+    "name": "Hawick",
+    "nation": "Scotland",
+    "pop": 10630,
+    "n": 89,
+    "rate": 83.7,
+    "n_pre1900": 38,
+    "rate_pre1900": 35.7,
+    "n_since1950": 19,
+    "rate_since1950": 17.9,
+    "top": "Andrew Smith"
+   },
+   {
+    "name": "Ballymena",
+    "nation": "Northern Ireland",
+    "pop": 31205,
+    "n": 218,
+    "rate": 69.9,
+    "n_pre1900": 99,
+    "rate_pre1900": 31.7,
+    "n_since1950": 63,
+    "rate_since1950": 20.2,
+    "top": "Liam Neeson"
+   }
+  ],
+  "mid_since1950": [
+   {
+    "name": "Bellshill",
+    "nation": "Scotland",
+    "pop": 19700,
+    "n": 292,
+    "rate": 148.2,
+    "n_pre1900": 18,
+    "rate_pre1900": 9.1,
+    "n_since1950": 217,
+    "rate_since1950": 110.2,
+    "top": "David MacMillan"
+   },
+   {
+    "name": "Carmarthen",
+    "nation": "Wales",
+    "pop": 15380,
+    "n": 220,
+    "rate": 143.0,
+    "n_pre1900": 75,
+    "rate_pre1900": 48.8,
+    "n_since1950": 111,
+    "rate_since1950": 72.2,
+    "top": "Joe Allen"
+   },
+   {
+    "name": "Bangor",
+    "nation": "Wales",
+    "pop": 16994,
+    "n": 229,
+    "rate": 134.8,
+    "n_pre1900": 43,
+    "rate_pre1900": 25.3,
+    "n_since1950": 115,
+    "rate_since1950": 67.7,
+    "top": "Duffy"
+   },
+   {
+    "name": "Chertsey",
+    "nation": "England",
+    "pop": 11612,
+    "n": 114,
+    "rate": 98.2,
+    "n_pre1900": 24,
+    "rate_pre1900": 20.7,
+    "n_since1950": 73,
+    "rate_since1950": 62.9,
+    "top": "Seretse Khama Ian Khama"
+   },
+   {
+    "name": "Aberystwyth",
+    "nation": "Wales",
+    "pop": 14168,
+    "n": 177,
+    "rate": 124.9,
+    "n_pre1900": 61,
+    "rate_pre1900": 43.1,
+    "n_since1950": 77,
+    "rate_since1950": 54.3,
+    "top": "Roger Rees"
+   },
+   {
+    "name": "Irvine",
+    "nation": "Scotland",
+    "pop": 34130,
+    "n": 232,
+    "rate": 68.0,
+    "n_pre1900": 33,
+    "rate_pre1900": 9.7,
+    "n_since1950": 176,
+    "rate_since1950": 51.6,
+    "top": "Nicola Sturgeon"
+   },
+   {
+    "name": "Hexham",
+    "nation": "England",
+    "pop": 10378,
+    "n": 92,
+    "rate": 88.6,
+    "n_pre1900": 23,
+    "rate_pre1900": 22.2,
+    "n_since1950": 49,
+    "rate_since1950": 47.2,
+    "top": "Fraser Forster"
+   },
+   {
+    "name": "Truro",
+    "nation": "England",
+    "pop": 21900,
+    "n": 170,
+    "rate": 77.6,
+    "n_pre1900": 47,
+    "rate_pre1900": 21.5,
+    "n_since1950": 102,
+    "rate_since1950": 46.6,
+    "top": "Michael Adams"
+   },
+   {
+    "name": "Epsom",
+    "nation": "England",
+    "pop": 34003,
+    "n": 259,
+    "rate": 76.2,
+    "n_pre1900": 38,
+    "rate_pre1900": 11.2,
+    "n_since1950": 142,
+    "rate_since1950": 41.8,
+    "top": "Tom Felton"
+   },
+   {
+    "name": "Ballymoney",
+    "nation": "Northern Ireland",
+    "pop": 11048,
+    "n": 67,
+    "rate": 60.6,
+    "n_pre1900": 12,
+    "rate_pre1900": 10.9,
+    "n_since1950": 44,
+    "rate_since1950": 39.8,
+    "top": "Chris Baird"
+   }
+  ],
+  "big_pre1900": [
+   {
+    "name": "Edinburgh",
+    "nation": "Scotland",
+    "pop": 506520,
+    "n": 3870,
+    "rate": 76.4,
+    "n_pre1900": 1774,
+    "rate_pre1900": 35.0,
+    "n_since1950": 1091,
+    "rate_since1950": 21.5,
+    "top": "Arthur Conan Doyle"
+   },
+   {
+    "name": "Bath",
+    "nation": "England",
+    "pop": 95048,
+    "n": 571,
+    "rate": 60.1,
+    "n_pre1900": 286,
+    "rate_pre1900": 30.1,
+    "n_since1950": 184,
+    "rate_since1950": 19.4,
+    "top": "Tyrone Mings"
+   },
+   {
+    "name": "Aberdeen",
+    "nation": "Scotland",
+    "pop": 198590,
+    "n": 1201,
+    "rate": 60.5,
+    "n_pre1900": 547,
+    "rate_pre1900": 27.5,
+    "n_since1950": 334,
+    "rate_since1950": 16.8,
+    "top": "Annie Lennox"
+   },
+   {
+    "name": "Liverpool",
+    "nation": "England",
+    "pop": 503714,
+    "n": 3542,
+    "rate": 70.3,
+    "n_pre1900": 1101,
+    "rate_pre1900": 21.9,
+    "n_since1950": 1378,
+    "rate_since1950": 27.4,
+    "top": "John Lennon"
+   },
+   {
+    "name": "Glasgow",
+    "nation": "Scotland",
+    "pop": 632350,
+    "n": 4763,
+    "rate": 75.3,
+    "n_pre1900": 1331,
+    "rate_pre1900": 21.0,
+    "n_since1950": 1823,
+    "rate_since1950": 28.8,
+    "top": "Alex Ferguson"
+   },
+   {
+    "name": "Paisley",
+    "nation": "Scotland",
+    "pop": 77270,
+    "n": 506,
+    "rate": 65.5,
+    "n_pre1900": 159,
+    "rate_pre1900": 20.6,
+    "n_since1950": 209,
+    "rate_since1950": 27.0,
+    "top": "James Peace"
+   },
+   {
+    "name": "Manchester",
+    "nation": "England",
+    "pop": 469193,
+    "n": 3065,
+    "rate": 65.3,
+    "n_pre1900": 879,
+    "rate_pre1900": 18.7,
+    "n_since1950": 1322,
+    "rate_since1950": 28.2,
+    "top": "Joseph John Thomson"
+   },
+   {
+    "name": "Exeter",
+    "nation": "England",
+    "pop": 125371,
+    "n": 467,
+    "rate": 37.2,
+    "n_pre1900": 233,
+    "rate_pre1900": 18.6,
+    "n_since1950": 154,
+    "rate_since1950": 12.3,
+    "top": "Chris Martin"
+   },
+   {
+    "name": "Dundee",
+    "nation": "Scotland",
+    "pop": 148210,
+    "n": 814,
+    "rate": 54.9,
+    "n_pre1900": 275,
+    "rate_pre1900": 18.6,
+    "n_since1950": 299,
+    "rate_since1950": 20.2,
+    "top": "Brian Cox"
+   },
+   {
+    "name": "Canterbury",
+    "nation": "England",
+    "pop": 55421,
+    "n": 248,
+    "rate": 44.7,
+    "n_pre1900": 100,
+    "rate_pre1900": 18.0,
+    "n_since1950": 101,
+    "rate_since1950": 18.2,
+    "top": "Christopher Marlowe"
+   }
+  ],
+  "big_since1950": [
+   {
+    "name": "Oxford",
+    "nation": "England",
+    "pop": 166279,
+    "n": 1112,
+    "rate": 66.9,
+    "n_pre1900": 280,
+    "rate_pre1900": 16.8,
+    "n_since1950": 532,
+    "rate_since1950": 32.0,
+    "top": "Stephen Hawking"
+   },
+   {
+    "name": "Belfast",
+    "nation": "Northern Ireland",
+    "pop": 293298,
+    "n": 2081,
+    "rate": 71.0,
+    "n_pre1900": 398,
+    "rate_pre1900": 13.6,
+    "n_since1950": 925,
+    "rate_since1950": 31.5,
+    "top": "C. S. Lewis"
+   },
+   {
+    "name": "Glasgow",
+    "nation": "Scotland",
+    "pop": 632350,
+    "n": 4763,
+    "rate": 75.3,
+    "n_pre1900": 1331,
+    "rate_pre1900": 21.0,
+    "n_since1950": 1823,
+    "rate_since1950": 28.8,
+    "top": "Alex Ferguson"
+   },
+   {
+    "name": "Manchester",
+    "nation": "England",
+    "pop": 469193,
+    "n": 3065,
+    "rate": 65.3,
+    "n_pre1900": 879,
+    "rate_pre1900": 18.7,
+    "n_since1950": 1322,
+    "rate_since1950": 28.2,
+    "top": "Joseph John Thomson"
+   },
+   {
+    "name": "Wigan",
+    "nation": "England",
+    "pop": 81906,
+    "n": 415,
+    "rate": 50.7,
+    "n_pre1900": 62,
+    "rate_pre1900": 7.6,
+    "n_since1950": 228,
+    "rate_since1950": 27.8,
+    "top": "Leon Osman"
+   },
+   {
+    "name": "Liverpool",
+    "nation": "England",
+    "pop": 503714,
+    "n": 3542,
+    "rate": 70.3,
+    "n_pre1900": 1101,
+    "rate_pre1900": 21.9,
+    "n_since1950": 1378,
+    "rate_since1950": 27.4,
+    "top": "John Lennon"
+   },
+   {
+    "name": "Paisley",
+    "nation": "Scotland",
+    "pop": 77270,
+    "n": 506,
+    "rate": 65.5,
+    "n_pre1900": 159,
+    "rate_pre1900": 20.6,
+    "n_since1950": 209,
+    "rate_since1950": 27.0,
+    "top": "James Peace"
+   },
+   {
+    "name": "Cambridge",
+    "nation": "England",
+    "pop": 149510,
+    "n": 819,
+    "rate": 54.8,
+    "n_pre1900": 208,
+    "rate_pre1900": 13.9,
+    "n_since1950": 382,
+    "rate_since1950": 25.6,
+    "top": "John Maynard Keynes"
+   },
+   {
+    "name": "Derry/Londonderry",
+    "nation": "Northern Ireland",
+    "pop": 85279,
+    "n": 406,
+    "rate": 47.6,
+    "n_pre1900": 92,
+    "rate_pre1900": 10.8,
+    "n_since1950": 216,
+    "rate_since1950": 25.3,
+    "top": "John Hume"
+   },
+   {
+    "name": "Bridgend",
+    "nation": "Wales",
+    "pop": 51012,
+    "n": 191,
+    "rate": 37.4,
+    "n_pre1900": 23,
+    "rate_pre1900": 4.5,
+    "n_since1950": 124,
+    "rate_since1950": 24.3,
+    "top": "Matthew Tuck"
+   }
+  ],
+  "small_since1950": [
+   {
+    "name": "St Asaph",
+    "nation": "Wales",
+    "pop": 3484,
+    "n": 89,
+    "rate": 255.5,
+    "n_pre1900": 16,
+    "rate_pre1900": 45.9,
+    "n_since1950": 64,
+    "rate_since1950": 183.7,
+    "top": "Ian Rush"
+   },
+   {
+    "name": "Cuckfield",
+    "nation": "England",
+    "pop": 3067,
+    "n": 70,
+    "rate": 228.2,
+    "n_pre1900": 4,
+    "rate_pre1900": 13.0,
+    "n_since1950": 54,
+    "rate_since1950": 176.1,
+    "top": "Tara Fitzgerald"
+   },
+   {
+    "name": "Pembury",
+    "nation": "England",
+    "pop": 5784,
+    "n": 61,
+    "rate": 105.5,
+    "n_pre1900": 1,
+    "rate_pre1900": 1.7,
+    "n_since1950": 55,
+    "rate_since1950": 95.1,
+    "top": "Kelly Holmes"
+   },
+   {
+    "name": "Taplow",
+    "nation": "England",
+    "pop": 2390,
+    "n": 30,
+    "rate": 125.5,
+    "n_pre1900": 6,
+    "rate_pre1900": 25.1,
+    "n_since1950": 22,
+    "rate_since1950": 92.1,
+    "top": "Brion Gysin"
+   },
+   {
+    "name": "Lanark",
+    "nation": "Scotland",
+    "pop": 8880,
+    "n": 99,
+    "rate": 111.5,
+    "n_pre1900": 25,
+    "rate_pre1900": 28.2,
+    "n_since1950": 56,
+    "rate_since1950": 63.1,
+    "top": "Colin McRae"
+   },
+   {
+    "name": "Willaston (Cheshire West and Chester)",
+    "nation": "England",
+    "pop": 2664,
+    "n": 25,
+    "rate": 93.8,
+    "n_pre1900": 1,
+    "rate_pre1900": 3.8,
+    "n_since1950": 15,
+    "rate_since1950": 56.3,
+    "top": "Niamh Charles"
+   },
+   {
+    "name": "Epping",
+    "nation": "England",
+    "pop": 9905,
+    "n": 74,
+    "rate": 74.7,
+    "n_pre1900": 10,
+    "rate_pre1900": 10.1,
+    "n_since1950": 47,
+    "rate_since1950": 47.5,
+    "top": "Philip Hammond"
+   },
+   {
+    "name": "Alexandria",
+    "nation": "Scotland",
+    "pop": 6710,
+    "n": 67,
+    "rate": 99.9,
+    "n_pre1900": 17,
+    "rate_pre1900": 25.3,
+    "n_since1950": 28,
+    "rate_since1950": 41.7,
+    "top": "Doug Livingstone"
+   },
+   {
+    "name": "Cardigan",
+    "nation": "Wales",
+    "pop": 4218,
+    "n": 51,
+    "rate": 120.9,
+    "n_pre1900": 28,
+    "rate_pre1900": 66.4,
+    "n_since1950": 17,
+    "rate_since1950": 40.3,
+    "top": "Brioc"
+   },
+   {
+    "name": "Easington (County Durham)",
+    "nation": "England",
+    "pop": 6281,
+    "n": 51,
+    "rate": 81.2,
+    "n_pre1900": 13,
+    "rate_pre1900": 20.7,
+    "n_since1950": 25,
+    "rate_since1950": 39.8,
+    "top": "Steve Harper"
+   }
+  ]
+ },
+ "since1950_share": {
+  "national": 0.373,
+  "top": [
+   {
+    "name": "Pembury",
+    "pop": 5784,
+    "n": 61,
+    "share": 0.902
+   },
+   {
+    "name": "Ascot",
+    "pop": 24567,
+    "n": 64,
+    "share": 0.875
+   },
+   {
+    "name": "Frimley",
+    "pop": 15530,
+    "n": 69,
+    "share": 0.812
+   },
+   {
+    "name": "Cuckfield",
+    "pop": 3067,
+    "n": 70,
+    "share": 0.771
+   },
+   {
+    "name": "Irvine",
+    "pop": 34130,
+    "n": 232,
+    "share": 0.759
+   },
+   {
+    "name": "Bellshill",
+    "pop": 19700,
+    "n": 292,
+    "share": 0.743
+   },
+   {
+    "name": "Redhill (Reigate and Banstead)",
+    "pop": 30863,
+    "n": 101,
+    "share": 0.733
+   },
+   {
+    "name": "Caerphilly",
+    "pop": 31965,
+    "n": 71,
+    "share": 0.732
+   },
+   {
+    "name": "St Asaph",
+    "pop": 3484,
+    "n": 89,
+    "share": 0.719
+   },
+   {
+    "name": "Welwyn Garden City",
+    "pop": 49691,
+    "n": 115,
+    "share": 0.696
+   },
+   {
+    "name": "Northallerton",
+    "pop": 13036,
+    "n": 51,
+    "share": 0.686
+   },
+   {
+    "name": "Ballymoney",
+    "pop": 11048,
+    "n": 67,
+    "share": 0.657
+   }
+  ]
+ },
+ "era_rank_corr": 0.59,
+ "by_nation": {
+  "England": {
+   "n": 130839,
+   "pop": 52594012,
+   "rate": 24.9,
+   "share_women": 0.185
+  },
+  "Northern Ireland": {
+   "n": 4904,
+   "pop": 1432228,
+   "rate": 34.2,
+   "share_women": 0.157
+  },
+  "Scotland": {
+   "n": 21437,
+   "pop": 4920110,
+   "rate": 43.6,
+   "share_women": 0.133
+  },
+  "Wales": {
+   "n": 9406,
+   "pop": 2644575,
+   "rate": 35.6,
+   "share_women": 0.147
+  }
+ },
+ "london": {
+  "n": 43159,
+  "pop": 8777371,
+  "rate": 49.2,
+  "share_births": 0.259,
+  "share_pop": 0.143,
+  "by_century": {
+   "before 1600": {
+    "n": 1661,
+    "london": 0.189
+   },
+   "1600s": {
+    "n": 2018,
+    "london": 0.309
+   },
+   "1700s": {
+    "n": 7052,
+    "london": 0.319
+   },
+   "1800s": {
+    "n": 45516,
+    "london": 0.271
+   },
+   "1900s": {
+    "n": 102844,
+    "london": 0.25
+   },
+   "2000s": {
+    "n": 3133,
+    "london": 0.279
+   }
+  }
+ },
+ "scaling": {
+  "n_towns": 957,
+  "slope": 1.3,
+  "r": 0.74
+ },
+ "most_famous_overall": [
+  {
+   "name": "William Shakespeare",
+   "town": "Stratford-upon-Avon",
+   "sl": 336,
+   "year": 1564,
+   "group": "writing"
+  },
+  {
+   "name": "Isaac Newton",
+   "town": "Colsterworth",
+   "sl": 303,
+   "year": 1643,
+   "group": "science"
+  },
+  {
+   "name": "Charles Darwin",
+   "town": "Shrewsbury",
+   "sl": 279,
+   "year": 1809,
+   "group": "science"
+  },
+  {
+   "name": "Winston Churchill",
+   "town": "Woodstock",
+   "sl": 264,
+   "year": 1874,
+   "group": "politics"
+  },
+  {
+   "name": "Charlie Chaplin",
+   "town": "London",
+   "sl": 261,
+   "year": 1889,
+   "group": "acting"
+  },
+  {
+   "name": "Charles Dickens",
+   "town": "Portsmouth",
+   "sl": 250,
+   "year": 1812,
+   "group": "writing"
+  },
+  {
+   "name": "Adam Smith",
+   "town": "Kirkcaldy and Dysart",
+   "sl": 226,
+   "year": 1723,
+   "group": "science"
+  },
+  {
+   "name": "John Locke",
+   "town": "Wrington",
+   "sl": 210,
+   "year": 1632,
+   "group": "science"
+  },
+  {
+   "name": "Margaret Thatcher",
+   "town": "Grantham",
+   "sl": 208,
+   "year": 1925,
+   "group": "politics"
+  },
+  {
+   "name": "Stephen Hawking",
+   "town": "Oxford",
+   "sl": 202,
+   "year": 1942,
+   "group": "science"
+  },
+  {
+   "name": "Agatha Christie",
+   "town": "Torquay",
+   "sl": 198,
+   "year": 1890,
+   "group": "writing"
+  },
+  {
+   "name": "John Maynard Keynes",
+   "town": "Cambridge",
+   "sl": 187,
+   "year": 1883,
+   "group": "science"
+  }
+ ],
+ "most_famous_cities": [
+  {
+   "town": "London",
+   "name": "Charlie Chaplin",
+   "sl": 261,
+   "year": 1889,
+   "viewed": "Harry Kane"
+  },
+  {
+   "town": "Birmingham",
+   "name": "Neville Chamberlain",
+   "sl": 120,
+   "year": 1869,
+   "viewed": "Joe Lycett"
+  },
+  {
+   "town": "Glasgow",
+   "name": "Alex Ferguson",
+   "sl": 113,
+   "year": 1941,
+   "viewed": "Alex Ferguson"
+  },
+  {
+   "town": "Leeds",
+   "name": "Peter O'Toole",
+   "sl": 103,
+   "year": 1932,
+   "viewed": "Erling Haaland"
+  },
+  {
+   "town": "Edinburgh",
+   "name": "Arthur Conan Doyle",
+   "sl": 183,
+   "year": 1859,
+   "viewed": "Sean Connery"
+  },
+  {
+   "town": "Liverpool",
+   "name": "John Lennon",
+   "sl": 186,
+   "year": 1940,
+   "viewed": "John Lennon"
+  },
+  {
+   "town": "Sheffield",
+   "name": "Joe Cocker",
+   "sl": 87,
+   "year": 1944,
+   "viewed": "Sean Bean"
+  },
+  {
+   "town": "Manchester",
+   "name": "Joseph John Thomson",
+   "sl": 120,
+   "year": 1856,
+   "viewed": "Noel Gallagher"
+  },
+  {
+   "town": "Bristol",
+   "name": "Paul Dirac",
+   "sl": 125,
+   "year": 1902,
+   "viewed": "Cary Grant"
+  },
+  {
+   "town": "Leicester",
+   "name": "Gary Lineker",
+   "sl": 89,
+   "year": 1960,
+   "viewed": "Gary Lineker"
+  },
+  {
+   "town": "Cardiff",
+   "name": "Roald Dahl",
+   "sl": 108,
+   "year": 1916,
+   "viewed": "Roald Dahl"
+  },
+  {
+   "town": "Coventry",
+   "name": "Clive Owen",
+   "sl": 61,
+   "year": 1964,
+   "viewed": "James Maddison"
+  },
+  {
+   "town": "Bradford",
+   "name": "Edward Victor Appleton",
+   "sl": 85,
+   "year": 1892,
+   "viewed": "Zayn Malik"
+  },
+  {
+   "town": "Nottingham",
+   "name": "M. Stanley Whittingham",
+   "sl": 55,
+   "year": 1941,
+   "viewed": "Samantha Morton"
+  },
+  {
+   "town": "Belfast",
+   "name": "C. S. Lewis",
+   "sl": 132,
+   "year": 1898,
+   "viewed": "C. S. Lewis"
+  },
+  {
+   "town": "Newcastle upon Tyne",
+   "name": "Peter Higgs",
+   "sl": 96,
+   "year": 1929,
+   "viewed": "Alan Shearer"
+  },
+  {
+   "town": "Brighton and Hove",
+   "name": "Martin Ryle",
+   "sl": 77,
+   "year": 1918,
+   "viewed": "Aubrey Beardsley"
+  },
+  {
+   "town": "Derby",
+   "name": "Herbert Spencer",
+   "sl": 120,
+   "year": 1820,
+   "viewed": "Alan Bates"
+  },
+  {
+   "town": "Kingston upon Hull",
+   "name": "William Wilberforce",
+   "sl": 57,
+   "year": 1759,
+   "viewed": "William Wilberforce"
+  },
+  {
+   "town": "Plymouth",
+   "name": "Robert Falcon Scott",
+   "sl": 82,
+   "year": 1868,
+   "viewed": "Rosie Huntington-Whiteley"
+  },
+  {
+   "town": "Stoke-on-Trent",
+   "name": "Robbie Williams",
+   "sl": 92,
+   "year": 1974,
+   "viewed": "Slash"
+  },
+  {
+   "town": "Southampton",
+   "name": "Rishi Sunak",
+   "sl": 141,
+   "year": 1980,
+   "viewed": "Rishi Sunak"
+  },
+  {
+   "town": "Northampton",
+   "name": "Francis Crick",
+   "sl": 97,
+   "year": 1916,
+   "viewed": "Sophie Turner"
+  },
+  {
+   "town": "Wolverhampton",
+   "name": "Liam Payne",
+   "sl": 68,
+   "year": 1993,
+   "viewed": "Liam Payne"
+  },
+  {
+   "town": "Luton",
+   "name": "Arthur Hailey",
+   "sl": 40,
+   "year": 1920,
+   "viewed": "James Justin"
+  },
+  {
+   "town": "Portsmouth",
+   "name": "Charles Dickens",
+   "sl": 250,
+   "year": 1812,
+   "viewed": "Charles Dickens"
+  },
+  {
+   "town": "Reading",
+   "name": "Kate Winslet",
+   "sl": 134,
+   "year": 1975,
+   "viewed": "Kate Winslet"
+  },
+  {
+   "town": "Aberdeen",
+   "name": "Annie Lennox",
+   "sl": 69,
+   "year": 1954,
+   "viewed": "Annie Lennox"
+  },
+  {
+   "town": "Norwich",
+   "name": "Philip Pullman",
+   "sl": 75,
+   "year": 1946,
+   "viewed": "Olivia Colman"
+  },
+  {
+   "town": "Bournemouth",
+   "name": "Virginia Wade",
+   "sl": 43,
+   "year": 1945,
+   "viewed": "Ben Hardy"
+  },
+  {
+   "town": "Peterborough",
+   "name": "David Bentley",
+   "sl": 35,
+   "year": 1984,
+   "viewed": "Andy Bell"
+  },
+  {
+   "town": "Bolton",
+   "name": "William Lassell",
+   "sl": 59,
+   "year": 1799,
+   "viewed": "Thomas Cole"
+  },
+  {
+   "town": "Milton Keynes",
+   "name": "Dele Alli",
+   "sl": 65,
+   "year": 1996,
+   "viewed": "Dele Alli"
+  },
+  {
+   "town": "Swindon",
+   "name": "Billie Piper",
+   "sl": 38,
+   "year": 1982,
+   "viewed": "Billie Piper"
+  },
+  {
+   "town": "Southend-on-Sea",
+   "name": "John Fowles",
+   "sl": 66,
+   "year": 1926,
+   "viewed": "Lara Pulver"
+  },
+  {
+   "town": "Swansea",
+   "name": "Catherine Zeta-Jones",
+   "sl": 103,
+   "year": 1969,
+   "viewed": "Catherine Zeta-Jones"
+  },
+  {
+   "town": "Oxford",
+   "name": "Stephen Hawking",
+   "sl": 202,
+   "year": 1942,
+   "viewed": "Florence Pugh"
+  },
+  {
+   "town": "Sunderland",
+   "name": "Jordan Henderson",
+   "sl": 77,
+   "year": 1990,
+   "viewed": "Jordan Henderson"
+  },
+  {
+   "town": "Warrington",
+   "name": "Tim Curry",
+   "sl": 70,
+   "year": 1946,
+   "viewed": "Tim Curry"
+  },
+  {
+   "town": "Slough",
+   "name": "John Frederick William Herschel",
+   "sl": 88,
+   "year": 1792,
+   "viewed": "Tracey Ullman"
+  },
+  {
+   "town": "Telford",
+   "name": "William Withering",
+   "sl": 27,
+   "year": 1741,
+   "viewed": "Rob Edwards"
+  },
+  {
+   "town": "Kingswood and Fishponds",
+   "name": "W. G. Grace",
+   "sl": 39,
+   "year": 1848,
+   "viewed": "Stephen Merchant"
+  },
+  {
+   "town": "Ipswich",
+   "name": "Ralph Fiennes",
+   "sl": 81,
+   "year": 1962,
+   "viewed": "Ralph Fiennes"
+  }
+ ],
+ "top_group_share": {
+  "sport": 0.207,
+  "science": 0.157,
+  "footballer": 0.118,
+  "politics": 0.1,
+  "writing": 0.099,
+  "acting": 0.078,
+  "music": 0.065,
+  "other": 0.06,
+  "military": 0.041,
+  "art": 0.034,
+  "religion": 0.023,
+  "business": 0.018
+ },
+ "top_group_n": {
+  "sport": 802,
+  "science": 606,
+  "footballer": 458,
+  "politics": 385,
+  "writing": 384,
+  "acting": 300,
+  "music": 252,
+  "other": 234,
+  "military": 157,
+  "art": 133,
+  "religion": 88,
+  "business": 70
+ },
+ "top_women": {
+  "n": 545,
+  "share": 0.141
+ },
+ "pv_agree": {
+  "n": 3658,
+  "same": 2612,
+  "share": 0.714
+ },
+ "fame_compare": {
+  "sl": {
+   "sport": 0.337,
+   "acting": 0.081,
+   "science": 0.154,
+   "since1950": 0.26
+  },
+  "pv": {
+   "sport": 0.283,
+   "acting": 0.124,
+   "science": 0.114,
+   "since1950": 0.323
+  }
+ },
+ "top_century": {
+  "before 1600": 189,
+  "1600s": 119,
+  "1700s": 306,
+  "1800s": 1152,
+  "1900s": 2038,
+  "2000s": 45,
+  "unknown": 20
+ },
+ "top_since1950": 966,
+ "groups": {
+  "footballer": {
+   "n": 28554,
+   "share": 0.142,
+   "label": "Footballers"
+  },
+  "sport": {
+   "n": 38047,
+   "share": 0.189,
+   "label": "Other sport"
+  },
+  "politics": {
+   "n": 15213,
+   "share": 0.076,
+   "label": "Politics, law and public life"
+  },
+  "science": {
+   "n": 25311,
+   "share": 0.126,
+   "label": "Science, scholarship and medicine"
+  },
+  "writing": {
+   "n": 17964,
+   "share": 0.089,
+   "label": "Writing and journalism"
+  },
+  "acting": {
+   "n": 14193,
+   "share": 0.071,
+   "label": "Acting and screen"
+  },
+  "music": {
+   "n": 13206,
+   "share": 0.066,
+   "label": "Music"
+  },
+  "art": {
+   "n": 14191,
+   "share": 0.071,
+   "label": "Visual arts, film-making and dance"
+  },
+  "military": {
+   "n": 5834,
+   "share": 0.029,
+   "label": "Military"
+  },
+  "religion": {
+   "n": 3438,
+   "share": 0.017,
+   "label": "Religion"
+  },
+  "business": {
+   "n": 5857,
+   "share": 0.029,
+   "label": "Business"
+  },
+  "other": {
+   "n": 19027,
+   "share": 0.095,
+   "label": "Other or not recorded"
+  }
+ },
+ "group_capitals": {
+  "footballer": [
+   {
+    "name": "Dumbarton",
+    "n": 72,
+    "rate": 351.6,
+    "pop": 20480
+   },
+   {
+    "name": "Irvine",
+    "n": 98,
+    "rate": 287.1,
+    "pop": 34130
+   },
+   {
+    "name": "Bishop Auckland",
+    "n": 58,
+    "rate": 279.4,
+    "pop": 20760
+   },
+   {
+    "name": "Wrexham",
+    "n": 105,
+    "rate": 237.1,
+    "pop": 44280
+   },
+   {
+    "name": "Motherwell",
+    "n": 75,
+    "rate": 228.4,
+    "pop": 32840
+   }
+  ],
+  "sport": [
+   {
+    "name": "Pontefract",
+    "n": 138,
+    "rate": 418.5,
+    "pop": 32973
+   },
+   {
+    "name": "Neath",
+    "n": 114,
+    "rate": 295.8,
+    "pop": 38546
+   },
+   {
+    "name": "Truro",
+    "n": 63,
+    "rate": 287.7,
+    "pop": 21900
+   },
+   {
+    "name": "Pontypridd",
+    "n": 91,
+    "rate": 285.2,
+    "pop": 31903
+   },
+   {
+    "name": "Wigan",
+    "n": 213,
+    "rate": 260.1,
+    "pop": 81906
+   }
+  ],
+  "politics": [
+   {
+    "name": "Ballymena",
+    "n": 43,
+    "rate": 137.8,
+    "pop": 31205
+   },
+   {
+    "name": "Belfast",
+    "n": 273,
+    "rate": 93.1,
+    "pop": 293298
+   },
+   {
+    "name": "Windsor",
+    "n": 26,
+    "rate": 81.5,
+    "pop": 31905
+   },
+   {
+    "name": "Derry/Londonderry",
+    "n": 67,
+    "rate": 78.6,
+    "pop": 85279
+   },
+   {
+    "name": "Inverness",
+    "n": 37,
+    "rate": 77.4,
+    "pop": 47790
+   }
+  ],
+  "science": [
+   {
+    "name": "Edinburgh",
+    "n": 762,
+    "rate": 150.4,
+    "pop": 506520
+   },
+   {
+    "name": "Aberdeen",
+    "n": 259,
+    "rate": 130.4,
+    "pop": 198590
+   },
+   {
+    "name": "Oxford",
+    "n": 212,
+    "rate": 127.5,
+    "pop": 166279
+   },
+   {
+    "name": "Cambridge",
+    "n": 185,
+    "rate": 123.7,
+    "pop": 149510
+   },
+   {
+    "name": "Lancaster",
+    "n": 49,
+    "rate": 105.0,
+    "pop": 46645
+   }
+  ],
+  "writing": [
+   {
+    "name": "Ballymena",
+    "n": 27,
+    "rate": 86.5,
+    "pop": 31205
+   },
+   {
+    "name": "Oxford",
+    "n": 134,
+    "rate": 80.6,
+    "pop": 166279
+   },
+   {
+    "name": "Truro",
+    "n": 17,
+    "rate": 77.6,
+    "pop": 21900
+   },
+   {
+    "name": "Cambridge",
+    "n": 115,
+    "rate": 76.9,
+    "pop": 149510
+   },
+   {
+    "name": "Merthyr Tydfil",
+    "n": 29,
+    "rate": 75.7,
+    "pop": 38296
+   }
+  ],
+  "acting": [
+   {
+    "name": "Epsom",
+    "n": 28,
+    "rate": 82.3,
+    "pop": 34003
+   },
+   {
+    "name": "Stratford-upon-Avon",
+    "n": 18,
+    "rate": 65.8,
+    "pop": 27351
+   },
+   {
+    "name": "Chichester",
+    "n": 20,
+    "rate": 62.4,
+    "pop": 32061
+   },
+   {
+    "name": "Manchester",
+    "n": 284,
+    "rate": 60.5,
+    "pop": 469193
+   },
+   {
+    "name": "Liverpool",
+    "n": 301,
+    "rate": 59.8,
+    "pop": 503714
+   }
+  ],
+  "music": [
+   {
+    "name": "Salisbury",
+    "n": 35,
+    "rate": 76.5,
+    "pop": 45739
+   },
+   {
+    "name": "Liverpool",
+    "n": 315,
+    "rate": 62.5,
+    "pop": 503714
+   },
+   {
+    "name": "Manchester",
+    "n": 282,
+    "rate": 60.1,
+    "pop": 469193
+   },
+   {
+    "name": "Windsor",
+    "n": 18,
+    "rate": 56.4,
+    "pop": 31905
+   },
+   {
+    "name": "Oxford",
+    "n": 92,
+    "rate": 55.3,
+    "pop": 166279
+   }
+  ],
+  "art": [
+   {
+    "name": "Edinburgh",
+    "n": 348,
+    "rate": 68.7,
+    "pop": 506520
+   },
+   {
+    "name": "Chichester",
+    "n": 22,
+    "rate": 68.6,
+    "pop": 32061
+   },
+   {
+    "name": "Bath",
+    "n": 61,
+    "rate": 64.2,
+    "pop": 95048
+   },
+   {
+    "name": "Epsom",
+    "n": 21,
+    "rate": 61.8,
+    "pop": 34003
+   },
+   {
+    "name": "Salisbury",
+    "n": 27,
+    "rate": 59.0,
+    "pop": 45739
+   }
+  ],
+  "military": [
+   {
+    "name": "Greenock",
+    "n": 36,
+    "rate": 87.2,
+    "pop": 41280
+   },
+   {
+    "name": "Dumbarton",
+    "n": 12,
+    "rate": 58.6,
+    "pop": 20480
+   },
+   {
+    "name": "Falkirk",
+    "n": 20,
+    "rate": 56.2,
+    "pop": 35590
+   },
+   {
+    "name": "Paisley",
+    "n": 40,
+    "rate": 51.8,
+    "pop": 77270
+   },
+   {
+    "name": "Stirling",
+    "n": 17,
+    "rate": 44.8,
+    "pop": 37910
+   }
+  ],
+  "religion": [
+   {
+    "name": "Truro",
+    "n": 7,
+    "rate": 32.0,
+    "pop": 21900
+   },
+   {
+    "name": "Bury St Edmunds",
+    "n": 9,
+    "rate": 21.6,
+    "pop": 41704
+   },
+   {
+    "name": "Llanelli",
+    "n": 9,
+    "rate": 20.3,
+    "pop": 44303
+   },
+   {
+    "name": "Great Yarmouth",
+    "n": 6,
+    "rate": 20.3,
+    "pop": 29605
+   },
+   {
+    "name": "Windsor",
+    "n": 6,
+    "rate": 18.8,
+    "pop": 31905
+   }
+  ],
+  "business": [
+   {
+    "name": "Ballymena",
+    "n": 12,
+    "rate": 38.5,
+    "pop": 31205
+   },
+   {
+    "name": "Windsor",
+    "n": 10,
+    "rate": 31.3,
+    "pop": 31905
+   },
+   {
+    "name": "Perth",
+    "n": 14,
+    "rate": 29.6,
+    "pop": 47350
+   },
+   {
+    "name": "Dumfries",
+    "n": 9,
+    "rate": 26.9,
+    "pop": 33470
+   },
+   {
+    "name": "Paisley",
+    "n": 19,
+    "rate": 24.6,
+    "pop": 77270
+   }
+  ]
+ },
+ "sport_capital_top_occ": {
+  "town": "Pontefract",
+  "occupation": "rugby league player",
+  "n": 116,
+  "of": 138
+ },
+ "signature_counts": {
+  "footballer": 166,
+  "sport": 105,
+  "politics": 66,
+  "military": 47,
+  "science": 47,
+  "music": 35,
+  "acting": 32,
+  "religion": 29,
+  "writing": 23,
+  "art": 16,
+  "business": 11
+ },
+ "n_signature_towns": 577,
+ "group_by_century": {
+  "before 1600": {
+   "footballer": 0.0,
+   "sport": 0.001,
+   "politics": 0.19,
+   "science": 0.106,
+   "writing": 0.122,
+   "acting": 0.005,
+   "music": 0.023,
+   "art": 0.013,
+   "military": 0.049,
+   "religion": 0.145,
+   "business": 0.024,
+   "other": 0.323
+  },
+  "1600s": {
+   "footballer": 0.0,
+   "sport": 0.002,
+   "politics": 0.214,
+   "science": 0.145,
+   "writing": 0.115,
+   "acting": 0.005,
+   "music": 0.02,
+   "art": 0.043,
+   "military": 0.047,
+   "religion": 0.082,
+   "business": 0.053,
+   "other": 0.273
+  },
+  "1700s": {
+   "footballer": 0.0,
+   "sport": 0.032,
+   "politics": 0.142,
+   "science": 0.186,
+   "writing": 0.122,
+   "acting": 0.012,
+   "music": 0.036,
+   "art": 0.098,
+   "military": 0.073,
+   "religion": 0.064,
+   "business": 0.08,
+   "other": 0.155
+  },
+  "1800s": {
+   "footballer": 0.092,
+   "sport": 0.149,
+   "politics": 0.11,
+   "science": 0.169,
+   "writing": 0.095,
+   "acting": 0.027,
+   "music": 0.03,
+   "art": 0.097,
+   "military": 0.051,
+   "religion": 0.025,
+   "business": 0.034,
+   "other": 0.121
+  },
+  "1900s": {
+   "footballer": 0.179,
+   "sport": 0.237,
+   "politics": 0.051,
+   "science": 0.106,
+   "writing": 0.083,
+   "acting": 0.098,
+   "music": 0.086,
+   "art": 0.06,
+   "military": 0.01,
+   "religion": 0.005,
+   "business": 0.022,
+   "other": 0.062
+  },
+  "2000s": {
+   "footballer": 0.415,
+   "sport": 0.253,
+   "politics": 0.007,
+   "science": 0.016,
+   "writing": 0.021,
+   "acting": 0.118,
+   "music": 0.069,
+   "art": 0.028,
+   "military": 0.001,
+   "religion": 0.0,
+   "business": 0.011,
+   "other": 0.063
+  }
+ },
+ "n_by_century": {
+  "before 1600": 3275,
+  "1600s": 3320,
+  "1700s": 10281,
+  "1800s": 55234,
+  "1900s": 117980,
+  "2000s": 3867,
+  "unknown": 6878
+ },
+ "women_by_decade": {
+  "1700": {
+   "n": 427,
+   "share": 0.096
+  },
+  "1710": {
+   "n": 467,
+   "share": 0.066
+  },
+  "1720": {
+   "n": 586,
+   "share": 0.096
+  },
+  "1730": {
+   "n": 662,
+   "share": 0.106
+  },
+  "1740": {
+   "n": 828,
+   "share": 0.101
+  },
+  "1750": {
+   "n": 1034,
+   "share": 0.104
+  },
+  "1760": {
+   "n": 1140,
+   "share": 0.115
+  },
+  "1770": {
+   "n": 1419,
+   "share": 0.107
+  },
+  "1780": {
+   "n": 1610,
+   "share": 0.095
+  },
+  "1790": {
+   "n": 2106,
+   "share": 0.112
+  },
+  "1800": {
+   "n": 2639,
+   "share": 0.099
+  },
+  "1810": {
+   "n": 3486,
+   "share": 0.118
+  },
+  "1820": {
+   "n": 3944,
+   "share": 0.124
+  },
+  "1830": {
+   "n": 4247,
+   "share": 0.127
+  },
+  "1840": {
+   "n": 4779,
+   "share": 0.139
+  },
+  "1850": {
+   "n": 5354,
+   "share": 0.14
+  },
+  "1860": {
+   "n": 6971,
+   "share": 0.166
+  },
+  "1870": {
+   "n": 7724,
+   "share": 0.165
+  },
+  "1880": {
+   "n": 8222,
+   "share": 0.152
+  },
+  "1890": {
+   "n": 7735,
+   "share": 0.146
+  },
+  "1900": {
+   "n": 8636,
+   "share": 0.163
+  },
+  "1910": {
+   "n": 8560,
+   "share": 0.158
+  },
+  "1920": {
+   "n": 9825,
+   "share": 0.144
+  },
+  "1930": {
+   "n": 10888,
+   "share": 0.142
+  },
+  "1940": {
+   "n": 13501,
+   "share": 0.16
+  },
+  "1950": {
+   "n": 12841,
+   "share": 0.188
+  },
+  "1960": {
+   "n": 14420,
+   "share": 0.212
+  },
+  "1970": {
+   "n": 12491,
+   "share": 0.238
+  },
+  "1980": {
+   "n": 13741,
+   "share": 0.255
+  },
+  "1990": {
+   "n": 12367,
+   "share": 0.271
+  },
+  "2000": {
+   "n": 3720,
+   "share": 0.269
+  },
+  "2010": {
+   "n": 98,
+   "share": 0.561
+  }
+ },
+ "women_by_century": {
+  "before 1600": 0.142,
+  "1600s": 0.11,
+  "1700s": 0.103,
+  "1800s": 0.144,
+  "1900s": 0.198,
+  "2000s": 0.276
+ },
+ "women_by_group": {
+  "footballer": 0.024,
+  "sport": 0.111,
+  "politics": 0.116,
+  "science": 0.153,
+  "writing": 0.347,
+  "acting": 0.418,
+  "music": 0.235,
+  "art": 0.221,
+  "military": 0.011,
+  "religion": 0.021,
+  "business": 0.138,
+  "other": 0.326
+ },
+ "women_towns": {
+  "n_towns": 207,
+  "top": [
+   {
+    "name": "Bangor",
+    "n": 228,
+    "share": 0.294
+   },
+   {
+    "name": "Basingstoke",
+    "n": 125,
+    "share": 0.28
+   },
+   {
+    "name": "Windsor",
+    "n": 218,
+    "share": 0.261
+   },
+   {
+    "name": "St Albans",
+    "n": 181,
+    "share": 0.26
+   },
+   {
+    "name": "Guildford",
+    "n": 278,
+    "share": 0.255
+   },
+   {
+    "name": "Rugby",
+    "n": 130,
+    "share": 0.254
+   },
+   {
+    "name": "Oxford",
+    "n": 1102,
+    "share": 0.249
+   },
+   {
+    "name": "Hitchin",
+    "n": 126,
+    "share": 0.246
+   }
+  ],
+  "bottom": [
+   {
+    "name": "Pontefract",
+    "n": 202,
+    "share": 0.074
+   },
+   {
+    "name": "Bishop Auckland",
+    "n": 113,
+    "share": 0.071
+   },
+   {
+    "name": "Gosport",
+    "n": 102,
+    "share": 0.069
+   },
+   {
+    "name": "Dumbarton",
+    "n": 190,
+    "share": 0.053
+   },
+   {
+    "name": "Airdrie",
+    "n": 102,
+    "share": 0.039
+   }
+  ],
+  "median": 0.16
+ },
+ "women_famous": {
+  "n": 1118,
+  "share": 0.183
+ },
+ "ambiguous": {
+  "n_labels": 742,
+  "n_people": 54479,
+  "share": 0.327,
+  "examples": [
+   "Newport",
+   "Richmond",
+   "Bangor",
+   "Newcastle",
+   "Gillingham"
+  ]
+ },
+ "rural_by_era": {
+  "before 1800": {
+   "n": 13389,
+   "share_rural": 0.199
+  },
+  "1800s": {
+   "n": 50038,
+   "share_rural": 0.09
+  },
+  "1900 to 1949": {
+   "n": 47029,
+   "share_rural": 0.033
+  },
+  "1950 to 1979": {
+   "n": 35245,
+   "share_rural": 0.017
+  },
+  "1980 on": {
+   "n": 26162,
+   "share_rural": 0.012
+  }
+ },
+ "hospital_items": {
+  "n": 242,
+  "examples": {
+   "St Mary's Hospital": 40,
+   "Queen Charlotte's and Chelsea Hospital": 21,
+   "Portland Hospital": 19,
+   "Chelsea and Westminster Hospital": 10,
+   "King's College Hospital": 4
+  }
+ },
+ "big10_share": {
+  "births": 0.407,
+  "pop": 0.225
+ },
+ "page": {
+  "hero_stars": "<span><i>&#9733;</i><b>William Shakespeare</b>Stratford-upon-Avon</span><span><i>&#9733;</i><b>Isaac Newton</b>Colsterworth</span><span><i>&#9733;</i><b>Charles Darwin</b>Shrewsbury</span><span><i>&#9733;</i><b>Winston Churchill</b>Woodstock</span>",
+  "top_sport_share": 0.32499999999999996,
+  "scaling_factor": 2.4622888266898326,
+  "rural_1800s": 0.09,
+  "rural_1980": 0.012,
+  "bellshill_n": 292,
+  "bellshill_pop": 19700,
+  "bellshill_post": 0.7431506849315068,
+  "w_footballer": 0.024,
+  "n_london_bua": 34,
+  "low_text": "Cumbernauld (3.4), Corby (3.4), Bracknell (3.7) and Milton Keynes (3.8)",
+  "breaks": {
+   "all": [
+    5.0,
+    10,
+    15,
+    30
+   ],
+   "pre": [
+    1.8,
+    3.8,
+    6.5,
+    10
+   ],
+   "post": [
+    1.5,
+    2.8,
+    5.1,
+    10
+   ]
+  },
+  "gbreaks": [
+   [
+    10,
+    20,
+    35,
+    70
+   ],
+   [
+    15,
+    30,
+    45,
+    75
+   ],
+   [
+    7.1,
+    10,
+    20,
+    30
+   ],
+   [
+    10,
+    15,
+    25,
+    45
+   ],
+   [
+    7.7,
+    15,
+    20,
+    30
+   ],
+   [
+    6.8,
+    10,
+    15,
+    25
+   ],
+   [
+    6.7,
+    10,
+    15,
+    20
+   ],
+   [
+    6.1,
+    10,
+    15,
+    25
+   ],
+   [
+    4.0,
+    7.4,
+    10,
+    20
+   ],
+   [
+    3.0,
+    5.4,
+    8.5,
+    15
+   ],
+   [
+    4.5,
+    7.0,
+    10,
+    15
+   ],
+   [
+    7.8,
+    15,
+    20,
+    30
+   ]
+  ],
+  "wbreaks": [
+   0.09,
+   0.12,
+   0.16,
+   0.2
+  ]
+ }
+}
