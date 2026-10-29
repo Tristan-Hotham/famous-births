@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Born Here</title>
+<meta name="description" content="Who was born in your town? {{overview.n_placed|int}} notable people in Wikidata matched to {{overview.n_towns_with|int}} UK towns and cities: the most famous person born in each, the towns that punch above their weight per head, occupations, centuries and the share of women.">
+<meta property="og:title" content="Born here: the most famous person born in every UK town">
+<meta property="og:description" content="Notable births per head for every UK town and city, the most famous person born in each, and what they did. From Wikidata, with the hospital and place-matching caveats that come with it.">
+<meta property="og:image" content="https://maps.tristanhotham.com/famous-births/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/famous-births/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Programme paper: cream, ink and a gilt star; a warm ramp from straw to claret for births per head. */
+:root{
+  --bg:#F7F3EC; --panel:#EEE7DA; --fg:#1E1B18; --muted:#615A51; --rule:#DDD4C4; --card:#FDFBF7; --border:#CBBFAB;
+  --acc:#A8322B; --gold:#B8862B; --sea:#E7EBEA; --land:#F2EDE3;
+  --q0:#F1E3B8; --q1:#E6BC6E; --q2:#D58A45; --q3:#B5452F; --q4:#6E2140;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#18171A; --panel:#232228; --fg:#EEEBE5; --muted:#A8A39A; --rule:#36343B; --card:#1F1E23; --border:#4C4952;
+  --acc:#EC7A64; --gold:#E2B456; --sea:#1A1D21; --land:#28272C;
+  --q0:#5A4A2E; --q1:#8E6A30; --q2:#C27C3A; --q3:#E5704F; --q4:#F6B3A0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#18171A; --panel:#232228; --fg:#EEEBE5; --muted:#A8A39A; --rule:#36343B; --card:#1F1E23; --border:#4C4952;
+  --acc:#EC7A64; --gold:#E2B456; --sea:#1A1D21; --land:#28272C;
+  --q0:#5A4A2E; --q1:#8E6A30; --q2:#C27C3A; --q3:#E5704F; --q4:#F6B3A0; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1120px,calc(100vw - 32px));margin-left:calc((100% - min(1120px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--acc);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--fg);color:var(--bg);padding:5px 8px;font-weight:500}
+header.hero{border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+.stars{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 14px;font:500 12px/1.2 var(--mono);color:var(--muted)}
+.stars span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--card);padding:6px 9px;border-radius:3px}
+.stars b{font:800 15px/1 var(--display);color:var(--fg)}
+.stars i{color:var(--gold);font-style:normal}
+h1{font:900 clamp(40px,9.5vw,82px)/.95 var(--display);letter-spacing:-.02em;margin:6px 0 0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--acc)}
+.dek{font-size:21px;line-height:1.42;margin:14px 0 0;max-width:54ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:52px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--acc);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--acc)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(26px,5.6vw,38px)/1 var(--display)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 8px}
+.controls label.l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;white-space:nowrap}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px;white-space:nowrap}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:3px;overflow:hidden;max-width:100%;flex:0 0 auto}
+.seg .btn{border:0;border-radius:0;border-right:1px solid var(--border)}
+.seg .btn:last-child{border-right:0}
+.searchbox{position:relative;flex:1 1 220px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:9px 11px;min-height:38px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:300px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.quick{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.quick .btn{min-height:32px;padding:6px 9px}
+@media (max-width:700px){
+  .controls.scroll,.quick{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:thin}
+  .controls.scroll .seg,.controls.scroll label.l,.quick .btn{flex:0 0 auto}
+}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+#lmap{height:760px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:900px){#lmap{height:600px}}
+@media (max-width:600px){#lmap{height:min(58vh,470px)}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+@media (max-width:600px){.leaflet-control-attribution{font-size:10px;line-height:1.25}}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.city{font:500 11px/1 var(--mono);color:var(--muted);white-space:nowrap;text-shadow:0 0 3px var(--bg),0 0 3px var(--bg),0 0 2px var(--bg);pointer-events:none}
+.city.r1{font-size:10px;font-weight:400}
+.city i{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--muted);margin-right:4px;vertical-align:1px}
+.city.r1 i{width:4px;height:4px}
+.who{font:600 11.5px/1.15 var(--display);color:var(--fg);white-space:nowrap;text-shadow:0 0 3px var(--bg),0 0 3px var(--bg),0 0 3px var(--bg),0 0 2px var(--bg);cursor:pointer}
+.who small{display:block;font:400 9.5px/1.2 var(--mono);color:var(--muted);letter-spacing:.02em}
+.who.big{font-size:14px}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:8px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:236px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono)}
+.lyrPanel .row{display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel select{font:400 12px var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:2px;padding:2px 4px;width:100%;min-height:0}
+.lyrPanel .sub{grid-column:1/-1;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px}
+.lyrPanel .sub span{flex:0 0 52px}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.pin{width:20px;height:20px;border:3px solid var(--fg);border-radius:50%;background:transparent;box-shadow:0 0 0 2px var(--bg)}
+.side{background:var(--card);border:1px solid var(--border);padding:14px 14px 10px}
+.side h4{font:500 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+#legend{font:400 12px/1.35 var(--mono)}
+.lg{display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0}
+.lg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ramp{display:flex;height:12px;margin:6px 0 2px}
+.ramp i{flex:1}
+.rampl{display:flex;justify-content:space-between;font:400 11px/1.2 var(--mono);color:var(--muted)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+#info{font:400 13px/1.45 var(--mono);border-top:1px solid var(--rule);padding-top:10px;margin-top:10px;min-height:80px}
+#info b{font-weight:600}
+#info .big{font:800 26px/1.1 var(--display);margin:0 0 2px}
+#info .star{font:700 19px/1.2 var(--display);margin:2px 0}
+#info .star:before{content:"\2605 ";color:var(--gold)}
+#info table{width:100%;border-collapse:collapse;margin:6px 0}
+#info td{padding:3px 4px 3px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+#info td.num{text-align:right;white-space:nowrap}
+#info .hbar{display:inline-block;height:8px;vertical-align:1px}
+.muted{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0}
+@media (max-width:700px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-top:8px solid var(--acc);padding:10px 12px;font:400 12.5px/1.45 var(--mono);cursor:pointer;text-align:left;color:var(--fg)}
+.card b{font:700 19px/1.1 var(--display);display:block;margin-bottom:2px}
+.card .big{font:900 24px/1.05 var(--display);margin:4px 0 2px}
+.card:hover{background:var(--panel)}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--gold);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+.warn{border-left:6px solid var(--acc)}
+table.t{width:100%;border-collapse:collapse;font:400 13px/1.35 var(--mono)}
+table.t th{text-align:left;font-weight:500;color:var(--muted);border-bottom:2px solid var(--fg);padding:6px 8px 6px 0}
+table.t td{border-bottom:1px solid var(--rule);padding:7px 8px 7px 0;vertical-align:top}
+table.t td.num,table.t th.num{text-align:right;white-space:nowrap}
+table.t a{cursor:pointer}
+.tablewrap{overflow-x:auto}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+.loading{font:400 12px/1.4 var(--mono);color:var(--muted)}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>Notable births</span><span>United Kingdom, 2026</span></div>
+<header class="hero">
+  <div class="stars" aria-hidden="true">{{page.hero_stars}}</div>
+  <h1>Who was <em>born</em> in your town?</h1>
+  <p class="dek">{{overview.n_placed|int}} notable people in Wikidata, matched to the {{overview.n_towns_with|int}} UK towns and cities they were born in. The most famous person from each, the towns that punch above their weight, and what all these people did.</p>
+</header>
+<div class="byline">Dr Tristan Hotham, Independent researcher · 2026 · Data: Wikidata (CC0); Wikimedia page views; ONS, NRS and NISRA populations; OS Open Names</div>
+
+<div class="stats">
+  <div><b>{{overview.n_placed|int}}</b><span>notable people born in {{overview.n_towns_with|int}} UK towns and cities, out of {{overview.n_people|int}} UK-born people in Wikidata</span></div>
+  <div><b style="color:var(--acc)">{{per_head.mid.0.rate|f0}}</b><span>notable births per 10,000 residents in {{per_head.mid.0.name}}, top among towns of 10,000 to 50,000; the median is {{per_head.mid_median|f0}}</span></div>
+  <div><b>{{london.share_births|pct}}</b><span>of matched births were in London, home to {{london.share_pop|pct}} of the people in these towns today</span></div>
+  <div><b style="color:var(--gold)">{{overview.share_female_known|pct}}</b><span>are women. In each town's single most famous slot, women hold {{top_women.share|pct}}</span></div>
+</div>
+
+<div class="note warn"><b>Read this first: notable, not typical; and "born in" is not always "from".</b> The people here are those famous enough to have a Wikidata entry with a birthplace: they lean towards men, sport, politics and the professions. Since the mid 20th century most British babies have been born in hospital, so a birthplace is often the hospital town, not the home town. That is why small towns with large hospitals rank so high for people born since 1950. Places come from Wikidata's own birthplace items, which are only as good as whoever entered them. I matched them to modern built-up areas by their coordinates; {{overview.n_coarse|int}} people whose birthplace is just "England", "Scotland", a county or similar could not be placed.</div>
+
+<p class="lede">Every town has a famous son or daughter, and most of them have a sign or a plaque to prove it. I wanted to see the whole country at once: who is the most famous person born in each place, and which places produce far more notable people than their size would suggest?</p>
+<p>I took every person in Wikidata whose place of birth is in the United Kingdom: {{overview.n_people|int}} people, from medieval kings to footballers born this century. I placed {{overview.n_placed|int}} of them in one of {{overview.n_towns|int}} towns and cities with an official population, and measured fame by how many language editions of Wikipedia (and sister sites) have a page about them. Search your town on the map, or read on for what stands out.</p>
+
+<h2><span class="n">01 · The map</span>The most famous person born in every town</h2>
+<div class="figure bleed" id="mapfig">
+  <div class="controls">
+    <div class="searchbox"><input type="search" id="q" placeholder="Search a town or city" aria-label="Look up a town or city" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sug"><ul class="suggest" id="sug" role="listbox"></ul></div>
+    <span class="loading" id="msg">Loading the map data...</span>
+  </div>
+  <div class="quick" id="quick" aria-label="Example places"></div>
+  <div class="controls scroll">
+    <label class="l">Show</label>
+    <div class="seg" role="group" aria-label="What the map shows" id="showBtns"><button class="btn" data-s="famous" aria-pressed="true">Most famous</button><button class="btn" data-s="rate" aria-pressed="false">Births per head</button><button class="btn" data-s="occ" aria-pressed="false">What they did</button><button class="btn" data-s="women" aria-pressed="false">Women</button></div>
+  </div>
+  <div class="controls scroll" id="sub1">
+    <label class="l">Fame</label>
+    <div class="seg" role="group" aria-label="Fame measure" id="fameBtns"><button class="btn" data-f="sl" aria-pressed="true">Languages</button><button class="btn" data-f="pv" aria-pressed="false">English readers</button></div>
+  </div>
+  <div class="controls scroll" id="sub2" hidden>
+    <label class="l">Born</label>
+    <div class="seg" role="group" aria-label="Which births" id="eraBtns"><button class="btn" data-e="all" aria-pressed="true">Any time</button><button class="btn" data-e="pre" aria-pressed="false">Before 1900</button><button class="btn" data-e="post" aria-pressed="false">Since 1950</button></div>
+  </div>
+  <div class="controls scroll" id="sub3" hidden>
+    <label class="l">Group</label>
+    <div class="seg" role="group" aria-label="Occupation group" id="grpBtns"></div>
+  </div>
+  <div class="mapgrid">
+    <div id="lmap" role="region" aria-label="Map of notable births in UK towns and cities"></div>
+    <div class="side">
+      <h4 id="keyTitle">Key</h4>
+      <div id="legend"></div>
+      <div id="info">Tap a circle or a name, or search for a town.</div>
+    </div>
+  </div>
+  <div class="src">Circles: towns and cities, sized by the number of notable people born there. "Languages": fame as the number of Wikimedia sites with a page on the person (mostly Wikipedia language editions). "English readers": average daily views of their English Wikipedia article over {{meta.pv_days}} days to {{meta.pv_end|date}}, checked for the three best-known people at each birthplace. Zoom in to see more names.</div>
+</div>
+
+<h2><span class="n">02 · The famous</span>Shakespeare, Newton, Darwin: and your town's</h2>
+<p>Ranked by the number of Wikimedia sites with a page about them, the most famous people born in the UK are <b>{{most_famous_overall.0.name}}</b> ({{most_famous_overall.0.town}}, {{most_famous_overall.0.sl}} sites), <b>{{most_famous_overall.1.name}}</b> ({{most_famous_overall.1.town}}, {{most_famous_overall.1.sl}}) and <b>{{most_famous_overall.2.name}}</b> ({{most_famous_overall.2.town}}, {{most_famous_overall.2.sl}}). Wikidata records Newton's birthplace as Woolsthorpe Manor, which falls inside the built-up area of the nearby village of {{most_famous_overall.1.town}}.</p>
+<p>Town by town the winners are a mixed crowd. Of the {{overview.n_towns_with|int}} towns, the most famous person was a sportsperson in {{page.top_sport_share|pct}} of them, worked in science or scholarship in {{top_group_share.science|pct}}, in politics, law or public life in {{top_group_share.politics|pct}} and in writing in {{top_group_share.writing|pct}}. In {{top_since1950}} towns the most famous person was born in 1950 or later. The two measures of fame often disagree: for the {{pv_agree.n|int}} towns where I have both, the person with most language editions is also the most read in English in {{pv_agree.share|pct}}. Languages favour sportspeople ({{fame_compare.sl.sport|pct}} of town winners against {{fame_compare.pv.sport|pct}} by English readers) and scientists ({{fame_compare.sl.science|pct}} against {{fame_compare.pv.science|pct}}); English readers favour actors ({{fame_compare.pv.acting|pct}} against {{fame_compare.sl.acting|pct}}) and people born since 1950 ({{fame_compare.pv.since1950|pct}} against {{fame_compare.sl.since1950|pct}}). London's most famous by languages is Charlie Chaplin; its most read is Harry Kane.</p>
+<div class="figure">
+  <div class="fig-h">The most famous person born in each of the UK's largest cities</div>
+  <div class="fig-sub">Cities of 150,000 people or more, largest first. Tap a city to see it on the map.</div>
+  <div class="tablewrap"><table class="t" id="cityTable"></table></div>
+  <div class="src">Most languages: most Wikimedia sitelinks on Wikidata. Most read: most daily views of the English Wikipedia article in the {{meta.pv_days}} days to {{meta.pv_end|date}}, among the three people with most sitelinks at each birthplace.</div>
+</div>
+
+<h2><span class="n">03 · Per head</span>Which towns punch above their weight?</h2>
+<p>Bigger places produce more notable people, and not just in proportion: across the {{scaling.n_towns|int}} towns of 10,000 people or more, doubling a town's population today goes with roughly {{page.scaling_factor|f1}} times as many notable births. Cities draw in the young, the ambitious and, for the last century, the maternity wards. The ten largest towns and cities hold {{big10_share.pop|pct}} of the people in these towns but {{big10_share.births|pct}} of the notable births.</p>
+<p>Per head, among the {{per_head.n_big|int}} towns and cities of 50,000 or more, <b>{{per_head.big.0.name}}</b> leads with {{per_head.big.0.rate|f0}} notable births per 10,000 residents today, then {{per_head.big.1.name}} ({{per_head.big.1.rate|f0}}), {{per_head.big.2.name}} ({{per_head.big.2.rate|f0}}), {{per_head.big.3.name}} ({{per_head.big.3.rate|f0}}) and {{per_head.big.4.name}} ({{per_head.big.4.rate|f0}}). The median is {{per_head.big_median|f0}}. At the other end are the post-war new towns: {{page.low_text}}. They had few residents to be born there before the 1950s, and their babies were often born in a hospital elsewhere.</p>
+<div class="figure">
+  <div class="fig-h">Notable births per 10,000 residents today: the top towns</div>
+  <div class="fig-sub">Towns of 10,000 to 50,000 people. Switch era to see how the hospital years reshuffle the list.</div>
+  <div class="controls scroll"><div class="seg" role="group" aria-label="Era for the chart" id="rankEra"><button class="btn" data-e="all" aria-pressed="true">Any time</button><button class="btn" data-e="pre" aria-pressed="false">Born before 1900</button><button class="btn" data-e="post" aria-pressed="false">Born since 1950</button></div><div class="seg" role="group" aria-label="Town size" id="rankSize"><button class="btn" data-z="mid" aria-pressed="true">10k to 50k</button><button class="btn" data-z="big" aria-pressed="false">50k and over</button></div></div>
+  <div class="chart" id="rankChart"></div>
+  <div class="src">Population: Census 2021 for England, Wales and Northern Ireland; NRS mid-2020 estimates for Scotland's localities. Births are counted across all centuries against today's population, so old towns that have since shrunk score high.</div>
+</div>
+<p>Born before 1900, the list is a roll call of old county and cathedral towns, ports and university seats: {{per_head_era.mid_pre1900.0.name}}, {{per_head_era.mid_pre1900.1.name}}, {{per_head_era.mid_pre1900.2.name}}, {{per_head_era.mid_pre1900.3.name}} and {{per_head_era.mid_pre1900.4.name}} among towns of 10,000 to 50,000; {{per_head_era.big_pre1900.0.name}} and {{per_head_era.big_pre1900.1.name}} among the larger places. Born since 1950, it becomes a list of hospital towns.</p>
+
+<h2><span class="n">04 · The hospital effect</span>Born in Bellshill: when the birthplace is the maternity ward</h2>
+<p>Before 1900 most people were born at home, and {{page.rural_1800s|pct}} of the 1800s births in the data that I could place on the map were outside any town I count. Since 1980 that share is {{page.rural_1980|pct}}: babies are born in hospitals, and hospitals are in towns. Wikidata usually records the town, so the hospital town gets the credit.</p>
+<p>Some small towns show it starkly. Across all towns, {{since1950_share.national|pct}} of notable births with a known year are since 1950. In {{since1950_share.top.0.name}} it is {{since1950_share.top.0.share|pct}}, in {{since1950_share.top.1.name}} {{since1950_share.top.1.share|pct}}, in {{since1950_share.top.2.name}} {{since1950_share.top.2.share|pct}} and in {{since1950_share.top.3.name}} {{since1950_share.top.3.share|pct}}. Several of the towns at the top of this list are home to, or were home to, large hospitals with maternity units serving a wide area. Bellshill has {{page.bellshill_n|int}} notable births for {{page.bellshill_pop|int}} residents, {{page.bellshill_post|pct}} of them since 1950. The rankings across eras agree only loosely: for towns of 10,000 to 50,000, the rank correlation between births per head before 1900 and since 1950 is {{era_rank_corr|f2}}.</p>
+<div class="figure">
+  <div class="fig-h">Share of placed births outside any counted town, by year of birth</div>
+  <div class="fig-sub">People whose Wikidata birthplace has coordinates in the UK. Most births moved into towns, and then into hospitals.</div>
+  <div class="chart" id="ruralChart"></div>
+</div>
+
+<h2><span class="n">05 · What they did</span>Footballers, scientists and the military towns</h2>
+<p>I sorted each person into one broad group from their Wikidata occupations. Sport is the biggest single group: {{groups.footballer.share|pct}} are footballers and {{groups.sport.share|pct}} other sportspeople. Science, scholarship and medicine (including historians, university teachers and doctors) is {{groups.science.share|pct}}, writing {{groups.writing.share|pct}}, politics, law and public life {{groups.politics.share|pct}}, acting {{groups.acting.share|pct}} and music {{groups.music.share|pct}}. The mix changes sharply over time: the military and the church fade, sport rises.</p>
+<div class="figure">
+  <div class="fig-h">What notable people did, by century of birth</div>
+  <div class="fig-sub">Share of each century's notable births in each group. Tap a group to map it.</div>
+  <div class="chart" id="grpChart"></div>
+</div>
+<p>Per head, each group has its capitals among towns of 20,000 or more. For footballers it is {{group_capitals.footballer.0.name}} ({{group_capitals.footballer.0.n}} born there), {{group_capitals.footballer.1.name}} and {{group_capitals.footballer.2.name}}; for other sports {{group_capitals.sport.0.name}}, where {{sport_capital_top_occ.n}} of the {{sport_capital_top_occ.of}} sportspeople are listed as a {{sport_capital_top_occ.occupation}}, and {{group_capitals.sport.1.name}}; for science and scholarship the university cities {{group_capitals.science.0.name}}, {{group_capitals.science.1.name}}, {{group_capitals.science.2.name}} and {{group_capitals.science.3.name}}; for the military, the Clyde: {{group_capitals.military.0.name}}, {{group_capitals.military.1.name}} and {{group_capitals.military.2.name}}.</p>
+<div class="cards" id="capCards"></div>
+
+<h2><span class="n">06 · Women</span>From one in ten to one in four</h2>
+<p>Women are {{overview.share_female_known|pct}} of the notable people with a recorded sex. The share was {{women_by_century.1700s|pct}} for people born in the 1700s, {{women_by_century.1800s|pct}} in the 1800s, {{women_by_century.1900s|pct}} in the 1900s and {{women_by_century.2000s|pct}} for those born since 2000. Among the very famous (50 or more language sites) it is {{women_famous.share|pct}}. The share by group runs from {{page.w_footballer|pct}} among footballers to {{women_by_group.acting|pct}} in acting and {{women_by_group.writing|pct}} in writing.</p>
+<div class="figure">
+  <div class="fig-h">Women's share of notable births, by decade of birth</div>
+  <div class="fig-sub">Decades with at least 200 notable births with a recorded sex, 1700s to 2010s.</div>
+  <div class="chart" id="womenChart"></div>
+</div>
+
+<h2><span class="n">07 · Four nations</span>Scotland punches hardest</h2>
+<p>Per head of today's population, Scotland has {{by_nation.Scotland.rate|f1}} notable births per 10,000 residents in its towns, Wales {{by_nation.Wales.rate|f1}}, Northern Ireland {{by_nation.Northern Ireland.rate|f1}} and England {{by_nation.England.rate|f1}}. England's figure includes London at {{london.rate|f1}}. I cannot tell from these data how much of the gap is history and how much is coverage: Wikidata's lists of some groups, footballers among them, are far more complete for some leagues and nations than others; and Scotland's populations come from a different statistical geography (NRS localities) from England's and Wales's (ONS built-up areas). Women's share is lowest in Scotland ({{by_nation.Scotland.share_women|pct}}) and highest in England ({{by_nation.England.share_women|pct}}).</p>
+
+<h2><span class="n">08 · Method</span>How I did this, and what to watch for</h2>
+<p><b>People.</b> Wikidata, queried on {{meta.retrieved|date}} through the QLever SPARQL endpoint: every human (Q5) with a place of birth (P19) whose country (P17) is the United Kingdom or a predecessor state, {{overview.n_people|int}} people. For each I kept one birthplace, the earliest birth year, sex, occupations and the number of Wikimedia sitelinks. {{overview.n_multi_birthplace|int}} people have more than one birthplace recorded; one was used.</p>
+<p><b>Towns.</b> England and Wales: ONS built-up areas (2022) with Census 2021 residents summed from the LSOAs best-fitted to each area; the {{page.n_london_bua}} London borough built-up areas are merged into one London, because most London births are recorded simply as "London". Scotland: NRS localities with mid-2020 estimates, placed at a built-up area or OS Open Names place of the same name. Northern Ireland: NISRA Census 2021 settlements of 500 or more, placed at a Wikidata settlement of the same name. {{overview.n_towns|int}} towns in all, with {{overview.pop_total|int}} residents.</p>
+<p><b>Matching.</b> Each birthplace's coordinates go to the town whose equal-area circle (plus a margin) contains them, measured from the area's centre and from any OS Open Names place of the same name nearby; in England and Wales a birthplace left over goes to the built-up area of the nearest neighbourhood (MSOA) centre within 2 km. Birthplaces recorded as the UK, a nation, a county or a council area are too coarse ({{overview.n_coarse|int}} people), {{overview.n_rural|int}} were in the countryside or in places too small to count, and {{overview.n_outside|int}} were outside the UK as it is now (mostly in the Republic of Ireland before 1922). {{ambiguous.n_labels|int}} birthplace names in the data, such as Newport, Richmond and Bangor, are shared by two or more places; Wikidata links people to a place item, not a name, but a wrong link made by an editor would put someone in the wrong town, and {{ambiguous.share|pct}} of matched births are at such a place.</p>
+<p><b>Fame.</b> Sitelinks count the Wikimedia sites with a page about the person. They favour people known around the world, and groups such as sportspeople whose pages are created in many language editions. As a check I gathered average daily views of the English Wikipedia article over {{meta.pv_days}} days for the three people with most sitelinks at each birthplace ({{meta.pv_n|int}} articles). Occupations are grouped by which group holds most of a person's Wikidata occupations.</p>
+<p><b>Limits.</b> Notability in Wikidata follows Wikipedia and other databases: sportspeople and politicians are very well covered, women and working people of the past much less so. Births across all centuries are set against today's population. Hospital births credit hospital towns. Only the most famous and most read person per town is named on this page.</p>
+<div class="note"><h3>Data and code</h3><p>Counts per town, by century and by group, the matching code and the analysis are in the <a href="https://github.com/Tristan-Hotham/famous-births">GitHub repository</a> and archived with the paper at <a href="https://doi.org/10.5281/zenodo.23763157">doi.org/10.5281/zenodo.23763157</a>. No list of people is published beyond the single most famous and most read person per town, all public figures with Wikipedia articles.</p></div>
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23763157">Read the paper</a><a href="https://github.com/Tristan-Hotham/famous-births">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/29/famous-births/">Blog post</a><a href="https://blog.tristanhotham.com/">More data studies</a></div>
+<p>Related: <a href="https://maps.tristanhotham.com/surname-birthplaces/">Has your surname left home?</a> uses the same Wikidata births to follow surnames across Britain.</p>
+
+<footer>
+  <p><b>Sources.</b> Wikidata (CC0 1.0), retrieved {{meta.retrieved|date}} through the QLever SPARQL endpoint (University of Freiburg). Wikimedia page views through the MediaWiki API (CC0). Office for National Statistics: built-up areas 2022, Census 2021 usual residents and lookups, Open Government Licence v3.0. National Records of Scotland: population estimates for settlements and localities, mid-2020, © Crown copyright, Open Government Licence v3.0. NISRA: Census 2021 table CT0100, settlements, © Crown copyright, Open Government Licence v3.0. OS Open Names, Ordnance Survey: contains OS data © Crown copyright and database right 2026, Open Government Licence v3.0. Map tiles © Esri.</p>
+  <p><b>Licences.</b> Code MIT. Data and text CC BY 4.0 (keep the source credits above when reusing).</p>
+  <p><b>Cite.</b> Hotham, T. (2026) Born here: notable births, fame and population in UK towns and cities, from Wikidata. Zenodo. <a href="https://doi.org/10.5281/zenodo.23763157">https://doi.org/10.5281/zenodo.23763157</a></p>
+  <p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+  <p>Dr Tristan Hotham, Independent researcher, ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a> · <a href="https://blog.tristanhotham.com/">blog.tristanhotham.com</a> · <a href="https://maps.tristanhotham.com/famous-births/">maps.tristanhotham.com/famous-births</a></p>
+</footer>
+</div>
+<button class="btn theme" id="themeBtn" aria-label="Switch light or dark theme">Theme</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const R = /*R*/;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const fmt = n => Math.round(n).toLocaleString("en-GB");
+const pct = v => Math.round(v * 100) + "%";
+const sum = a => a.reduce((x, y) => x + y, 0);
+const isDark = () => { const t = document.documentElement.dataset.theme; return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+document.getElementById("themeBtn").onclick = () => { document.documentElement.dataset.theme = isDark() ? "light" : "dark"; redrawAll(); };
+const GL = R.group_labels, GC = R.group_colours, GN = R.groups;
+const gcol = i => GC[i];
+
+/* ===== state and data ===== */
+const S = { show: "famous", fame: "sl", era: "all", grp: 0, town: null };
+const D = { t: null, names: null };
+let lmap, datL = null, whoL = null, landL = null, borderL = null, nameL = null, baseL = null, hillL = null, pin = null, renderer;
+const msg = document.getElementById("msg");
+const C = {}; // column index
+const col = (r, k) => r[C[k]];
+function births(r) { return S.era === "pre" ? col(r, "pre1900") : S.era === "post" ? col(r, "since1950") : col(r, "n"); }
+function rateOf(r) { return births(r) / col(r, "pop") * 1e4; }
+function rampCol(v, br) { const q = ["--q0", "--q1", "--q2", "--q3", "--q4"]; let i = 0; while (i < br.length && v >= br[i]) i++; return css(q[i]); }
+
+/* value and colour for the current view */
+function view(r) {
+  const n = col(r, "n"); if (!n) return null;
+  if (S.show === "rate") { const b = births(r); if (!b) return null; return { size: b, colour: rampCol(rateOf(r), R.breaks[S.era]) }; }
+  if (S.show === "occ") { const g = col(r, "groups")[S.grp]; if (!g) return null; return { size: g, colour: rampCol(g / col(r, "pop") * 1e5, R.gbreaks[S.grp]) }; }
+  if (S.show === "women") { const m = col(r, "women_men"); if (m < 20) return { size: n, colour: css("--rule") }; return { size: n, colour: rampCol(col(r, "women") / m, R.wbreaks) }; }
+  const gi = col(r, "top_group"); return { size: n, colour: gi == null ? css("--muted") : gcol(gi) };
+}
+function drawData() {
+  if (datL) datL.remove(); datL = null;
+  if (!D.t) return;
+  const o = LY.colour / 100, dk = isDark(), z = lmap.getZoom(), k = (S.show === "occ" ? (innerWidth < 600 ? 0.6 : 0.85) : 0.36) * (z >= 8 ? 1.5 : z >= 6.5 ? 1.2 : 1), cap = innerWidth < 600 ? 30 : 44;
+  datL = L.layerGroup();
+  const rows = D.t.rows.map(r => [r, view(r)]).filter(x => x[1]).sort((a, b) => b[1].size - a[1].size);
+  for (const [r, v] of rows) {
+    const rad = Math.min(cap, Math.max(2.2, k * Math.sqrt(v.size)));
+    const m = L.circleMarker([col(r, "lat"), col(r, "lon")], { renderer, radius: rad, weight: 1, color: dk ? "#18171A" : "#FFFFFF", opacity: .9 * o, fillColor: v.colour, fillOpacity: .82 * o });
+    m.on("click", ev => { L.DomEvent.stopPropagation(ev); pickTown(r, false); });
+    m.addTo(datL);
+  }
+  datL.addTo(lmap);
+}
+/* names of the most famous person, collision-avoided, most famous first */
+function drawWho() {
+  if (whoL) whoL.clearLayers(); else return;
+  if (!D.t || S.show !== "famous" || !LY.who) return;
+  const z = lmap.getZoom(), bb = lmap.getBounds().pad(.05), boxes = [], useSl = S.fame === "sl";
+  const cand = D.t.rows.filter(r => col(r, "n") && (useSl ? col(r, "top") : col(r, "viewed")) && bb.contains([col(r, "lat"), col(r, "lon")]))
+    .map(r => [useSl ? col(r, "top_sl") : col(r, "viewed_pv"), r]).sort((a, b) => b[0] - a[0]);
+  let n = 0; const mx = innerWidth < 600 ? 28 : 70;
+  for (const [v, r] of cand) {
+    const nm = useSl ? col(r, "top") : col(r, "viewed"), pt = lmap.latLngToContainerPoint([col(r, "lat"), col(r, "lon")]);
+    const big = n < 8, fs = big ? 14 : 11.5, w = Math.max(nm.length * fs * .56, col(r, "name").length * 6) + 6, bx = [pt.x - w / 2, pt.y + 4, pt.x + w / 2, pt.y + 8 + fs + 12];
+    if (boxes.some(b => bx[0] < b[2] && bx[2] > b[0] && bx[1] < b[3] && bx[3] > b[1])) continue;
+    boxes.push(bx);
+    const m = L.marker([col(r, "lat"), col(r, "lon")], { pane: "labels", keyboard: false, icon: L.divIcon({ className: "who" + (big ? " big" : ""), html: `<div style="transform:translate(-50%,6px);text-align:center">${esc(nm)}<small>${esc(col(r, "name"))}</small></div>`, iconSize: null, iconAnchor: [0, 0] }) });
+    m.on("click", () => pickTown(r, false)); m.addTo(whoL);
+    if (++n >= mx) break;
+  }
+}
+function redrawData() { drawData(); drawWho(); legend(); placeNames(); }
+
+/* ===== key and information panel ===== */
+function rampHtml(br, f) { const q = ["--q0", "--q1", "--q2", "--q3", "--q4"]; return `<div class="ramp">${q.map(v => `<i style="background:${css(v)}"></i>`).join("")}</div><div class="rampl"><span></span>${br.map(b => `<span>${f(b)}</span>`).join("")}<span></span></div>`; }
+function legend() {
+  const box = document.getElementById("legend"), kt = document.getElementById("keyTitle");
+  if (S.show === "famous") { kt.textContent = "Most famous person born here, by what they did"; box.innerHTML = `<div class="lg">${GN.map((g, i) => `<span><i class="dot" style="background:${gcol(i)}"></i>${esc(GL[g])}</span>`).join("")}</div><div class="muted" style="margin-top:4px">Circle size: all notable births. Names: ${S.fame === "sl" ? "most language editions" : "most read in English"}.</div>`; }
+  else if (S.show === "rate") { kt.textContent = "Notable births per 10,000 residents today" + (S.era === "pre" ? ", born before 1900" : S.era === "post" ? ", born since 1950" : ""); box.innerHTML = rampHtml(R.breaks[S.era], v => v) + `<div class="muted" style="margin-top:4px">Circle size: notable births.</div>`; }
+  else if (S.show === "occ") { kt.textContent = GL[GN[S.grp]] + ": births per 100,000 residents"; box.innerHTML = rampHtml(R.gbreaks[S.grp], v => v) + `<div class="muted" style="margin-top:4px">Circle size: births in this group.</div>`; }
+  else { kt.textContent = "Women's share of notable births"; box.innerHTML = rampHtml(R.wbreaks, pct) + `<div class="muted" style="margin-top:4px">Pale grey: fewer than 20 births with a recorded sex.</div>`; }
+}
+const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
+const wlink = (t, nm) => t ? `<a href="https://en.wikipedia.org/wiki/${t}" target="_blank" rel="noopener">${esc(nm)}</a>` : esc(nm);
+function townInfo(r) {
+  const n = col(r, "n"), pop = col(r, "pop"), rate = n / pop * 1e4;
+  const peers = D.t.rows.filter(x => (pop >= 50000 ? x[C.pop] >= 50000 : pop >= 10000 ? x[C.pop] >= 10000 && x[C.pop] < 50000 : x[C.pop] < 10000));
+  const rank = peers.filter(x => x[C.n] / x[C.pop] > n / pop).length + 1;
+  const band = pop >= 50000 ? "towns and cities of 50,000 or more" : pop >= 10000 ? "towns of 10,000 to 50,000" : "places under 10,000";
+  let h = `<div class="big">${esc(col(r, "name"))}</div><div class="muted">${esc(R.nations[col(r, "nation")])}. ${fmt(pop)} residents.</div>`;
+  if (!n) { document.getElementById("info").innerHTML = h + `<p style="margin-top:8px">No notable birth in Wikidata is placed here.</p>`; return; }
+  h += `<div style="margin:8px 0"><b>${fmt(n)}</b> notable births, <b>${rate.toFixed(1)}</b> per 10,000 residents: ${ordinal(rank)} of ${fmt(peers.length)} ${band}.</div>`;
+  const gi = col(r, "top_group");
+  h += `<div class="muted" style="margin-top:6px">Most famous (most language editions)</div><div class="star">${wlink(col(r, "top_wiki"), col(r, "top"))}</div><div class="muted">${col(r, "top_year") != null ? "born " + col(r, "top_year") + ", " : ""}${gi != null ? esc(GL[GN[gi]]).toLowerCase() + ", " : ""}${col(r, "top_sl")} language sites</div>`;
+  if (col(r, "viewed") && col(r, "viewed") !== col(r, "top")) h += `<div class="muted" style="margin-top:6px">Most read in English</div><div class="star">${wlink(col(r, "viewed_wiki"), col(r, "viewed"))}</div><div class="muted">${fmt(col(r, "viewed_pv") / R.pv_days)} views a day</div>`;
+  else if (col(r, "viewed")) h += `<div class="muted" style="margin-top:4px">Also the most read in English: ${fmt(col(r, "viewed_pv") / R.pv_days)} views a day.</div>`;
+  const g = col(r, "groups"), gm = Math.max(...g);
+  h += `<div style="margin-top:10px"><b>What they did</b></div><table>` + g.map((v, i) => [v, i]).filter(x => x[0]).sort((a, b) => b[0] - a[0]).slice(0, 6).map(([v, i]) => `<tr><td>${esc(GL[GN[i]])}</td><td class="num">${v}</td><td style="width:34%"><span class="hbar" style="width:${v / gm * 100}%;background:${gcol(i)}"></span></td></tr>`).join("") + `</table>`;
+  const c = col(r, "centuries"), cm = Math.max(...c);
+  h += `<div><b>Born in</b></div><table>` + R.centuries.slice(0, 6).map((nm, i) => `<tr><td>${esc(nm)}</td><td class="num">${c[i]}</td><td style="width:34%"><span class="hbar" style="width:${cm ? c[i] / cm * 100 : 0}%;background:${css("--q3")}"></span></td></tr>`).join("") + `</table>`;
+  const wm = col(r, "women_men"); if (wm) h += `<div>Women: <b>${pct(col(r, "women") / wm)}</b> of ${fmt(wm)} with a recorded sex.</div>`;
+  const post = col(r, "since1950") / n; if (n >= 30 && post >= .6) h += `<div class="muted" style="margin-top:6px">${pct(post)} of these births are since 1950 (all towns: ${pct(R.nat_post)}). A hospital serving a wide area may explain much of this.</div>`;
+  document.getElementById("info").innerHTML = h;
+}
+function scrollToMap() { const el = document.getElementById("lmap"), r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) el.scrollIntoView({ behavior: "smooth", block: innerWidth < 700 ? "start" : "center" }); }
+
+/* ===== map layers: base map, hills, place names, borders, names of the famous, circle strength ===== */
+const LY = { base: "auto", hills: true, hillK: 30, names: true, nameLvl: 1, lines: true, lineK: 55, who: true, colour: 100 };
+const LYDEF = { ...LY };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("fb_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("fb_layers", JSON.stringify(LY)); } catch (e) {} };
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+function initLayers() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false" aria-controls="lyrPanel">Map layers</button>
+<div class="lyrPanel" id="lyrPanel" hidden>
+ <div class="row"><label style="font-weight:600">Base map</label><span></span><div class="sub"><span>style</span><select id="lyBase" aria-label="Base map"><option value="auto">Match the theme</option><option value="light">Light grey</option><option value="dark">Dark grey</option><option value="none">None (plain land)</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyHills"> Hills</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyHillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" id="lyNames"> Place names</label><span></span><div class="sub"><span>how many</span><select id="lyNameLvl" aria-label="How many place names"><option value="0">Cities only</option><option value="1">Cities and towns</option><option value="2">Down to villages</option></select></div></div>
+ <div class="row"><label><input type="checkbox" id="lyLines"> Coast and borders</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyLineK" min="10" max="100" step="5" aria-label="Border line strength"></div></div>
+ <div class="row"><label><input type="checkbox" id="lyWho"> Famous names</label><span></span></div>
+ <div class="row"><label style="font-weight:600">Circles</label><span></span><div class="sub"><span>strength</span><input type="range" id="lyColour" min="20" max="100" step="5" aria-label="Circle strength"></div></div>
+ <button class="reset" id="lyReset">Reset layers</button>
+</div>`;
+    return d; } });
+  lmap.addControl(new Ctl());
+  const q = id => document.getElementById(id), btn = lmap.getContainer().querySelector(".lyrBtn"), pan = q("lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => { q("lyBase").value = LY.base; q("lyHills").checked = LY.hills; q("lyHillK").value = LY.hillK; q("lyNames").checked = LY.names; q("lyNameLvl").value = LY.nameLvl; q("lyLines").checked = LY.lines; q("lyLineK").value = LY.lineK; q("lyWho").checked = LY.who; q("lyColour").value = LY.colour; };
+  const on = (id, ev, f) => q(id).addEventListener(ev, e => { f(e.target); saveLY(); applyLayers(); });
+  on("lyBase", "change", t => LY.base = t.value);
+  on("lyHills", "change", t => LY.hills = t.checked); on("lyHillK", "input", t => { LY.hillK = +t.value; LY.hills = true; q("lyHills").checked = true; });
+  on("lyNames", "change", t => LY.names = t.checked); on("lyNameLvl", "change", t => { LY.nameLvl = +t.value; LY.names = true; q("lyNames").checked = true; });
+  on("lyLines", "change", t => LY.lines = t.checked); on("lyLineK", "input", t => { LY.lineK = +t.value; LY.lines = true; q("lyLines").checked = true; });
+  on("lyWho", "change", t => { LY.who = t.checked; drawWho(); });
+  on("lyColour", "change", t => { LY.colour = +t.value; lastColour = null; });
+  q("lyReset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); lastColour = null; applyLayers(); drawWho(); };
+  sync();
+  lmap.on("zoomend moveend", () => { placeNames(); drawWho(); });
+}
+let baseKey = null, lastColour = null;
+function applyLayers() {
+  if (!lmap) return;
+  const want = LY.base === "auto" ? (isDark() ? "dark" : "light") : LY.base;
+  if (want !== baseKey) {
+    if (baseL) baseL.remove(); baseL = null; baseKey = want;
+    if (want !== "none") baseL = L.tileLayer(ESRI + `Canvas/World_${want === "dark" ? "Dark" : "Light"}_Gray_Base/MapServer/tile/{z}/{y}/{x}`, { pane: "base", maxZoom: 16, attribution: "Tiles © Esri" }).addTo(lmap);
+  }
+  if (LY.hills) { if (!hillL) hillL = L.tileLayer(ESRI + "Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", { pane: "hills", maxZoom: 16, attribution: "Hillshade © Esri" }); hillL.addTo(lmap); hillL.setOpacity(.08 + LY.hillK / 100 * .5); }
+  else if (hillL) hillL.remove();
+  if (landL) landL.setStyle({ fillColor: css("--land"), color: css("--muted"), fillOpacity: want === "none" ? 1 : 0, opacity: .55 });
+  if (borderL) { if (LY.lines) { borderL.addTo(lmap); borderL.setStyle({ color: css("--fg"), opacity: .15 + LY.lineK / 100 * .85 }); } else borderL.remove(); }
+  if (D.t && lastColour !== LY.colour) { lastColour = LY.colour; drawData(); }
+  placeNames();
+}
+function placeNames() {
+  if (!lmap || !nameL) return;
+  nameL.clearLayers(); if (!LY.names || !D.names) { nameL.remove(); return; } nameL.addTo(lmap);
+  const z = lmap.getZoom(), bb = lmap.getBounds().pad(.05), lvl = LY.nameLvl, N = D.names;
+  // with famous names on, show fewer place names so the two do not crowd
+  const fam = S.show === "famous" && LY.who;
+  let minR = lvl === 0 ? (z >= 7 ? 4 : 5) : lvl === 1 ? (z >= 9.5 ? 3 : z >= 7 ? 4 : 5) : (z >= 9 ? 1 : z >= 7.5 ? 3 : z >= 6.5 ? 4 : 5);
+  if (fam && z < 8.5) minR = Math.max(minR, 5);
+  const cand = [];
+  for (let i = 0; i < N.n.length; i++) if (N.r[i] >= minR) { const la = N.la[i] / 1e4, lo = N.lo[i] / 1e4; if (bb.contains([la, lo])) cand.push([N.r[i], la, lo, N.n[i]]); }
+  cand.sort((a, b) => b[0] - a[0]);
+  const boxes = [], seen = new Set(); let n = 0;
+  for (const [r, la, lo, nm] of cand) {
+    if (seen.has(nm)) continue;
+    const pt = lmap.latLngToContainerPoint([la, lo]), fs = r >= 3 ? 11 : 10, bx = [pt.x - 4, pt.y - 8, pt.x + 10 + nm.length * fs * .62, pt.y + 7];
+    if (boxes.some(o => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
+    boxes.push(bx); seen.add(nm);
+    L.marker([la, lo], { pane: "names", interactive: false, keyboard: false, icon: L.divIcon({ className: "city" + (r <= 1 ? " r1" : ""), html: `<i></i>${esc(nm)}`, iconSize: null, iconAnchor: [3, 6] }) }).addTo(nameL);
+    if (++n >= 160) break;
+  }
+}
+function initMap() {
+  if (!window.L) { document.getElementById("lmap").innerHTML = '<p style="padding:16px">The map library did not load.</p>'; return false; }
+  lmap = L.map("lmap", { zoomSnap: .25, zoomDelta: .5, minZoom: 3.75, maxZoom: 13, scrollWheelZoom: false, maxBounds: L.latLngBounds([48.5, -13], [62, 5]) });
+  lmap.fitBounds([[49.9, -8.2], [60.9, 1.8]], { padding: [4, 4] });
+  lmap.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+  for (const [p, z] of [["landp", 150], ["base", 200], ["hills", 250], ["dat", 400], ["bord", 420], ["names", 600], ["labels", 650]]) lmap.createPane(p).style.zIndex = z;
+  lmap.getPane("hills").style.pointerEvents = "none"; lmap.getPane("bord").style.pointerEvents = "none"; lmap.getPane("names").style.pointerEvents = "none";
+  renderer = L.canvas({ pane: "dat", padding: .3, tolerance: 4 });
+  nameL = L.layerGroup(); whoL = L.layerGroup().addTo(lmap);
+  lmap.attributionControl.addAttribution("Wikidata, CC0 | Contains OS data © Crown copyright and database right 2026 | ONS, NRS, NISRA, OGL");
+  lmap.on("click", () => lmap.scrollWheelZoom.enable());
+  let lastZ = null;
+  lmap.on("zoomend", () => { const z = lmap.getZoom(), b = z >= 8 ? 2 : z >= 6.5 ? 1 : 0; if (b !== lastZ) { lastZ = b; drawData(); } });
+  initLayers();
+  return true;
+}
+function setPin(la, lo) { if (pin) pin.remove(); pin = L.marker([la, lo], { interactive: false, pane: "labels", icon: L.divIcon({ className: "", html: '<div class="pin"></div>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(lmap); }
+
+/* ===== loading ===== */
+const J = u => fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+async function load() {
+  if (!initMap()) return;
+  try { const [t, nm, outline] = await Promise.all([J("data/page/towns.json"), J("data/page/names.json"), J("data/page/outline.json")]);
+    D.t = t; D.names = nm; D.outline = outline; }
+  catch (e) { msg.textContent = "The map data did not load. Try reloading the page."; return; }
+  D.t.cols.forEach((c, i) => C[c] = i);
+  D.byName = new Map(D.t.rows.map(r => [r[C.name].toLowerCase(), r]));
+  landL = L.geoJSON(D.outline.land, { pane: "landp", interactive: false, style: { weight: .6, color: css("--muted"), fillColor: css("--land"), fillOpacity: 0 } }).addTo(lmap);
+  borderL = L.geoJSON(D.outline.borders, { pane: "bord", interactive: false, style: { weight: 1.3, dashArray: "5 4", color: css("--fg"), opacity: .6 } });
+  msg.textContent = "";
+  lmap.invalidateSize(); lmap.fitBounds([[49.9, -8.2], [60.9, 1.8]], { paddingTopLeft: [4, 4], paddingBottomRight: [4, 24] });
+  applyLayers(); redrawData();
+  const startT = D.byName.get(R.start_town.toLowerCase()); if (startT) { townInfo(startT); S.town = startT; }
+}
+function redrawAll() { if (!lmap) return; baseKey = null; lastColour = null; applyLayers(); redrawData(); drawCharts(); }
+
+/* ===== controls ===== */
+function setPressed(id, attr, val) { document.querySelectorAll(`#${id} .btn`).forEach(b => b.setAttribute("aria-pressed", b.dataset[attr] === String(val))); }
+document.querySelectorAll("#showBtns .btn").forEach(b => b.onclick = () => setShow(b.dataset.s));
+document.querySelectorAll("#fameBtns .btn").forEach(b => b.onclick = () => { S.fame = b.dataset.f; setPressed("fameBtns", "f", S.fame); redrawData(); });
+document.querySelectorAll("#eraBtns .btn").forEach(b => b.onclick = () => { S.era = b.dataset.e; setPressed("eraBtns", "e", S.era); redrawData(); });
+const gb = document.getElementById("grpBtns");
+GN.slice(0, -1).forEach((g, i) => { const b = document.createElement("button"); b.className = "btn"; b.dataset.g = i; b.textContent = R.group_short[g]; b.setAttribute("aria-pressed", i === 0); b.onclick = () => pickGroup(i, false); gb.appendChild(b); });
+function pickGroup(i, scroll) { S.grp = i; setPressed("grpBtns", "g", i); if (S.show !== "occ") setShow("occ"); else redrawData(); if (scroll) scrollToMap(); }
+function setShow(v) {
+  S.show = v; setPressed("showBtns", "s", v);
+  document.getElementById("sub1").hidden = v !== "famous"; document.getElementById("sub2").hidden = v !== "rate"; document.getElementById("sub3").hidden = v !== "occ";
+  redrawData();
+}
+function pickTown(r, zoom) {
+  S.town = r; townInfo(r); setPin(col(r, "lat"), col(r, "lon"));
+  if (zoom) lmap.setView([col(r, "lat"), col(r, "lon")], Math.max(lmap.getZoom(), 9));
+  document.getElementById("q").value = col(r, "name");
+  scrollToMap();
+}
+const quick = document.getElementById("quick");
+for (const s of R.quick) { const b = document.createElement("button"); b.className = "btn"; b.textContent = s; b.onclick = () => { const r = D.byName && D.byName.get(s.toLowerCase()); if (r) pickTown(r, true); }; quick.appendChild(b); }
+
+/* search: towns with a population first, then other places */
+const norm = s => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, "");
+function combo(inputId, listId, search, pick) {
+  const inp = document.getElementById(inputId), ul = document.getElementById(listId); let items = [], k = -1;
+  const close = () => { ul.style.display = "none"; inp.setAttribute("aria-expanded", "false"); k = -1; };
+  const render = () => { ul.innerHTML = items.map((it, j) => `<li role="option" aria-selected="${j === k}" data-j="${j}">${it.html}</li>`).join(""); ul.style.display = items.length ? "block" : "none"; inp.setAttribute("aria-expanded", items.length ? "true" : "false"); };
+  inp.addEventListener("input", () => { items = search(inp.value.trim()); k = -1; render(); });
+  inp.addEventListener("keydown", e => { if (e.key === "ArrowDown") { k = Math.min(items.length - 1, k + 1); render(); e.preventDefault(); } else if (e.key === "ArrowUp") { k = Math.max(0, k - 1); render(); e.preventDefault(); } else if (e.key === "Enter") { const it = items[k >= 0 ? k : 0]; if (it && (it.r || it.place)) { pick(it); inp.value = it.label; close(); } e.preventDefault(); } else if (e.key === "Escape") close(); });
+  ul.addEventListener("mousedown", e => { const li = e.target.closest("li"); if (!li) return; const it = items[+li.dataset.j]; if (!it.r && !it.place) return; pick(it); inp.value = it.label; close(); e.preventDefault(); });
+  inp.addEventListener("blur", () => setTimeout(close, 150));
+}
+combo("q", "sug", v => {
+  if (!D.t || v.length < 2) return []; const n = norm(v), out = [];
+  for (const r of D.t.rows) { const m = norm(r[C.name]); if (m.startsWith(n) || m.includes(" " + n)) out.push([m === n ? 0 : m.startsWith(n) ? 1 : 2, -r[C.pop], { label: r[C.name], html: `${esc(r[C.name])} <span>${fmt(r[C.pop])} people, ${fmt(r[C.n])} notable births</span>`, r }]); }
+  const N = D.names; for (let i = 0; i < N.n.length; i++) { const m = norm(N.n[i]); if (m.startsWith(n) && !D.byName.has(N.n[i].toLowerCase())) out.push([3, -N.r[i], { label: N.n[i], html: `${esc(N.n[i])} <span>${esc(N.a[i])}: show the nearest town</span>`, place: [N.la[i] / 1e4, N.lo[i] / 1e4] }]); }
+  out.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (!out.length) return [{ label: v, html: `<span>No town or place starts like that.</span>` }];
+  return out.slice(0, 14).map(x => x[2]);
+}, it => {
+  if (it.r) pickTown(it.r, true);
+  else if (it.place) { const [la, lo] = it.place; let best = null, bd = 1e9; for (const r of D.t.rows) { const d = (r[C.lat] - la) ** 2 + ((r[C.lon] - lo) * .6) ** 2; if (d < bd && r[C.n]) { bd = d; best = r; } } lmap.setView([la, lo], 10); if (best) { townInfo(best); setPin(la, lo); } scrollToMap(); }
+});
+
+/* ===== charts ===== */
+const cw = id => Math.max(300, Math.min(680, document.getElementById(id).clientWidth || 640));
+function svgEl(w, h, inner, lab) { return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(lab)}">${inner}</svg>`; }
+const gridX = (x, H, ticks, lab) => ticks.map(g => `<line x1="${x(g)}" x2="${x(g)}" y1="0" y2="${H - 22}" stroke="${css("--rule")}"/><text x="${x(g)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="${css("--muted")}">${lab(g)}</text>`).join("");
+const RK = { era: "all", size: "mid" };
+function rankChart() {
+  const key = RK.size + "_" + RK.era, rows = R.rank[key], W = cw("rankChart"), sm = W < 520, L0 = sm ? 118 : 170, rh = 28, H = rows.length * rh + 30;
+  const mx = Math.max(...rows.map(r => r[2])) * 1.12, x = v => L0 + v / mx * (W - L0 - 50);
+  const step = mx > 150 ? 50 : mx > 60 ? 20 : 10, tk = []; for (let g = 0; g <= mx; g += step) tk.push(g);
+  let s = gridX(x, H, tk, v => v);
+  rows.forEach(([nm, top, v, n], j) => { const y = j * rh;
+    s += `<text x="${L0 - 8}" y="${y + 17}" text-anchor="end" font-size="${sm ? 11 : 12.5}" class="go" data-t="${esc(nm)}" style="cursor:pointer">${esc(nm)}</text><rect x="${L0}" y="${y + 5}" width="${Math.max(1, x(v) - L0)}" height="16" fill="${css(RK.era === "post" ? "--q3" : RK.era === "pre" ? "--q1" : "--q2")}"><title>${esc(nm)}: ${v} per 10,000, ${n} births. Most famous: ${esc(top)}</title></rect><text x="${x(v) + 4}" y="${y + 17}" font-size="11">${v}</text>`; });
+  const el = document.getElementById("rankChart"); el.innerHTML = svgEl(W, H, s, "Bar chart of notable births per 10,000 residents for the top towns");
+  el.querySelectorAll(".go").forEach(c => c.onclick = () => { const r = D.byName && D.byName.get(c.dataset.t.toLowerCase()); if (r) pickTown(r, true); });
+}
+document.querySelectorAll("#rankEra .btn").forEach(b => b.onclick = () => { RK.era = b.dataset.e; setPressed("rankEra", "e", RK.era); rankChart(); });
+document.querySelectorAll("#rankSize .btn").forEach(b => b.onclick = () => { RK.size = b.dataset.z; setPressed("rankSize", "z", RK.size); rankChart(); });
+function ruralChart() {
+  const rows = R.rural, W = cw("ruralChart"), L0 = W < 520 ? 100 : 130, rh = 32, H = rows.length * rh + 30, mx = Math.max(...rows.map(r => r[1])) * 1.15, x = v => L0 + v / mx * (W - L0 - 50);
+  let s = gridX(x, H, [0, .05, .1, .15, .2].filter(t => t <= mx), pct);
+  rows.forEach(([lb, v, n], j) => { const y = j * rh; s += `<text x="${L0 - 8}" y="${y + 18}" text-anchor="end" font-size="12">${esc(lb)}</text><rect x="${L0}" y="${y + 6}" width="${Math.max(1, x(v) - L0)}" height="17" fill="${css("--q2")}"><title>${lb}: ${pct(v)} of ${fmt(n)}</title></rect><text x="${x(v) + 4}" y="${y + 18}" font-size="11">${(v * 100).toFixed(1)}%</text>`; });
+  document.getElementById("ruralChart").innerHTML = svgEl(W, H, s, "Bar chart of the share of births outside towns by era");
+}
+function grpChart() {
+  const W = cw("grpChart"), sm = W < 520, L0 = sm ? 100 : 118, rh = 34, cents = R.centuries.slice(0, 6), H = cents.length * rh + 30 + Math.ceil(GN.length / (sm ? 2 : 3)) * 18 + 10, x = v => L0 + v * (W - L0 - 8);
+  let s = "";
+  cents.forEach((c, j) => { const y = j * rh; let acc = 0;
+    s += `<text x="${L0 - 8}" y="${y + 19}" text-anchor="end" font-size="12">${esc(c)}</text>`;
+    GN.forEach((g, i) => { const v = R.gbc[c][g]; if (v > 0) s += `<rect class="go" data-g="${i}" x="${x(acc)}" y="${y + 6}" width="${Math.max(0, x(acc + v) - x(acc) - .5)}" height="20" fill="${gcol(i)}" style="cursor:pointer"><title>${esc(c)}: ${esc(GL[g])} ${pct(v)}</title></rect>`; if (v >= .08) s += `<text x="${x(acc) + 3}" y="${y + 20}" font-size="10" style="fill:#fff;pointer-events:none">${pct(v)}</text>`; acc += v; }); });
+  const per = sm ? 2 : 3, lw = (W - 10) / per, ly = cents.length * rh + 14;
+  GN.forEach((g, i) => { const cx = 4 + (i % per) * lw, cy = ly + Math.floor(i / per) * 18; s += `<rect x="${cx}" y="${cy}" width="11" height="11" fill="${gcol(i)}"/><text x="${cx + 16}" y="${cy + 10}" font-size="11">${esc(R.group_short[g])}</text>`; });
+  const el = document.getElementById("grpChart"); el.innerHTML = svgEl(W, H, s, "Stacked bars of occupation groups by century of birth");
+  el.querySelectorAll(".go").forEach(c => c.onclick = () => { const i = +c.dataset.g; if (i < GN.length - 1) pickGroup(i, true); });
+}
+function womenChart() {
+  const pts = R.women_dec, W = cw("womenChart"), H = Math.min(320, W * .55), L0 = 40, B = 30, x0 = 1700, x1 = 2010, y1 = .4;
+  const x = v => L0 + (v - x0) / (x1 - x0) * (W - L0 - 12), y = v => H - B - v / y1 * (H - B - 8);
+  let s = "";
+  for (let g = 0; g <= y1 + 1e-9; g += .1) s += `<line x1="${L0}" x2="${W - 8}" y1="${y(g)}" y2="${y(g)}" stroke="${css("--rule")}"/><text x="${L0 - 6}" y="${y(g) + 4}" text-anchor="end" font-size="11" fill="${css("--muted")}">${pct(g)}</text>`;
+  for (let g = 1700; g <= 2000; g += 50) s += `<text x="${x(g)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="${css("--muted")}">${g}s</text>`;
+  s += `<polyline fill="none" stroke="${css("--acc")}" stroke-width="2.5" points="${pts.map(p => x(p[0]) + "," + y(p[1])).join(" ")}"/>`;
+  s += pts.map(p => `<circle cx="${x(p[0])}" cy="${y(p[1])}" r="3" fill="${css("--acc")}"><title>${p[0]}s: ${pct(p[1])} women of ${fmt(p[2])}</title></circle>`).join("");
+  document.getElementById("womenChart").innerHTML = svgEl(W, H, s, "Line chart of women's share of notable births by decade");
+}
+function cityTable() {
+  let h = `<tr><th>City</th><th>Most languages</th><th class="num">Sites</th><th>Most read in English</th></tr>`;
+  for (const c of R.cities) h += `<tr><td><a data-t="${esc(c[0])}">${esc(c[0])}</a></td><td>${esc(c[1])}${c[2] ? ` <span class="muted">(${c[2]})</span>` : ""}</td><td class="num">${c[3]}</td><td>${c[4] && c[4] !== c[1] ? esc(c[4]) : '<span class="muted">same</span>'}</td></tr>`;
+  const t = document.getElementById("cityTable"); t.innerHTML = h;
+  t.querySelectorAll("a[data-t]").forEach(a => a.onclick = () => { const r = D.byName && D.byName.get(a.dataset.t.toLowerCase()); if (r) pickTown(r, true); });
+}
+function capCards() {
+  const box = document.getElementById("capCards"); box.innerHTML = "";
+  R.caps.forEach(([gi, nm, n, rate]) => { const c = document.createElement("button"); c.className = "card"; c.style.borderTopColor = gcol(gi);
+    c.innerHTML = `<b>${esc(GL[GN[gi]])}</b><div class="big">${esc(nm)}</div>${n} born there, ${rate} per 100,000 residents today.`; c.onclick = () => pickGroup(gi, true); box.appendChild(c); });
+}
+function drawCharts() { rankChart(); ruralChart(); grpChart(); womenChart(); }
+cityTable(); capCards(); drawCharts();
+let rsT = null; addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(drawCharts, 200); });
+load();
+</script>
+</body>
+</html>

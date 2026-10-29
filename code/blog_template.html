@@ -1,0 +1,153 @@
+<!-- wp:paragraph -->
+<p><em>Every town has a famous son or daughter. I matched {{overview.n_placed|int}} notable people in Wikidata to the UK towns and cities they were born in, to find the most famous person from each place, and the towns that punch above their weight.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/famous-births/">Explore the interactive version</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23763157">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>Drive into almost any British town and a sign, a plaque or a statue will tell you who was born there. Stratford has Shakespeare, Liverpool has John Lennon, Kirkcaldy has Adam Smith. I wanted to see all of them at once, and to ask a question the signs never answer: which places produce more famous people than their size would lead you to expect?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Wikidata, the open database behind Wikipedia, records a place of birth for {{overview.n_people|int}} people born in the UK, from medieval kings to footballers born this century. I placed {{overview.n_placed|int}} of them in {{overview.n_towns_with|int}} towns and cities that have an official population, and measured fame by how many language editions of Wikipedia have a page about each person.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A map of famous names</h2>
+<!-- /wp:heading -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_map.png|Map of the United Kingdom with circles for towns and cities, coloured from pale straw to dark claret by notable births per 10,000 residents, labelled with the most famous person born in a selection of places, from Shakespeare in Stratford-upon-Avon to C. S. Lewis in Belfast.|Every UK town and city with a notable birth in Wikidata, coloured by births per head and sized by number, with the most famous person born in a selection of places. The interactive version names them all as you zoom in.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Ranked by the number of Wikipedia language editions and sister sites with a page about them, the three most famous people born in the UK are {{most_famous_overall.0.name}}, {{most_famous_overall.1.name}} and {{most_famous_overall.2.name}}. Town by town the winners are a mixed crowd: in {{page.top_sport_share|pct}} of towns the most famous person is a footballer or other sportsperson, and in {{top_since1950}} towns they were born in 1950 or later. Only {{top_women.share|pct}} of these local champions are women.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Fame is slippery, so I measured it a second way too: how many people read each person's English Wikipedia article over the last {{meta.pv_days}} days. The two measures pick the same person in {{pv_agree.share|pct}} of towns. Languages favour sportspeople and scientists; English readers favour actors and people born since 1950 ({{fame_compare.pv.since1950|pct}} of the most-read winners, against {{fame_compare.sl.since1950|pct}} by languages). London's most famous by languages is Charlie Chaplin; its most read is Harry Kane. The interactive map lets you switch between the two.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Big places punch harder</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Bigger places produce more notable people, and more than in proportion. Across {{scaling.n_towns|int}} towns of 10,000 people or more, doubling the population goes with about {{page.scaling_factor|f1}} times as many notable births. London alone has {{london.share_births|pct}} of the births I could place, but only {{london.share_pop|pct}} of the people living in these towns today.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_scaling.png|Scatter plot on log scales of notable births against population for towns of 10,000 or more, with a dashed line rising more steeply than one to one; London, Glasgow, Edinburgh and Liverpool sit high, Milton Keynes and Corby low.|Notable births against population today, towns of 10,000 or more (log scales). The dashed line is the best fit.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Per head, among places of 50,000 or more, {{per_head.big.0.name}} leads with {{per_head.big.0.rate|f0}} notable births for every 10,000 people living there today, followed by {{per_head.big.1.name}}, {{per_head.big.2.name}}, {{per_head.big.3.name}} and {{per_head.big.4.name}}. At the bottom are the post-war new towns, such as {{page.low_text}}: they had few residents before the 1950s, and their babies were usually born in a hospital somewhere else.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">The hospital effect</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>That last point turned out to be the biggest story in the data. Split the births by era and the rankings scramble. For people born before 1900, the towns of 10,000 to 50,000 with most notable births per head are old county, cathedral, port and university towns: {{per_head_era.mid_pre1900.0.name}}, {{per_head_era.mid_pre1900.1.name}}, {{per_head_era.mid_pre1900.2.name}}, {{per_head_era.mid_pre1900.3.name}}. For people born since 1950 the list is led by {{per_head_era.mid_since1950.0.name}}, {{per_head_era.mid_since1950.1.name}}, {{per_head_era.mid_since1950.2.name}} and {{per_head_era.mid_since1950.3.name}}.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_rank.png|Two bar charts of notable births per 10,000 residents for towns of 10,000 to 50,000: the top ten for people born before 1900, led by {{per_head_era.mid_pre1900.0.name}}, and the top ten for people born since 1950, led by {{per_head_era.mid_since1950.0.name}}.|Towns of 10,000 to 50,000 with most notable births per head: born before 1900 (left) and born since 1950 (right).}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Bellshill in Lanarkshire has {{page.bellshill_n|int}} notable births for {{page.bellshill_pop|int}} residents, and {{page.bellshill_post|pct}} of them were born since 1950. Several of the towns at the top of the modern list have, or had, large hospitals with maternity units serving a wide area. Since the middle of the 20th century, most British babies have been born in hospital, and Wikidata almost always records the town rather than the hospital. So "born in" a town often means born in its hospital, not raised in its streets.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:pullquote -->
+<figure class="wp-block-pullquote"><blockquote><p>In the hospital era, the most "productive" small towns are the ones with a maternity ward.</p></blockquote></figure>
+<!-- /wp:pullquote -->
+
+<!-- wp:paragraph -->
+<p>You can see the shift in the data as a whole. Of births I could put on the map, {{page.rural_1800s|pct1}} of those in the 1800s were outside any town I count. Since 1980 it is {{page.rural_1980|pct1}}.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_rural.png|Bar chart of the share of notable births outside any counted town by period of birth, falling from about one in five before 1800 to about one in a hundred since 1980.|Share of notable births outside any counted town, by period of birth.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Footballers, scientists and the Clyde</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I sorted everyone into one broad group from their Wikidata occupations. Sport is the biggest: {{groups.footballer.share|pct}} are footballers and {{groups.sport.share|pct}} other sportspeople. Science, scholarship and medicine make up {{groups.science.share|pct}}, writing {{groups.writing.share|pct}}, politics and law {{groups.politics.share|pct}}. The mix has changed: the military and the church fade over the centuries and sport takes over.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_groups.png|Stacked horizontal bars showing the occupation mix of notable people by century of birth, with military and religion shrinking and footballers and other sport growing in the 1900s.|What notable people did, by century of birth.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Each group has its capitals. Per head, the footballer capital among towns of 20,000 or more is {{group_capitals.footballer.0.name}}, then {{group_capitals.footballer.1.name}} and {{group_capitals.footballer.2.name}}. Science and scholarship belong to the university cities: {{group_capitals.science.0.name}}, {{group_capitals.science.1.name}}, {{group_capitals.science.2.name}} and {{group_capitals.science.3.name}}. And the military capitals are on the Clyde: {{group_capitals.military.0.name}}, {{group_capitals.military.1.name}} and {{group_capitals.military.2.name}}.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Women: one in ten, then one in four</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Women are {{overview.share_female_known|pct}} of the notable people in the data. That share was {{women_by_century.1700s|pct}} for people born in the 1700s and {{women_by_century.1800s|pct}} in the 1800s, and reaches {{women_by_century.2000s|pct}} for those born since 2000. It says as much about who gets written down as about who did what.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full">{{IMG|b_women.png|Line chart of women's share of notable births by decade of birth from the 1700s to the 2010s, low and flat until the late 1800s and then rising to about a quarter.|Women's share of notable births, by decade of birth.}}</figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Per head, Scotland has the most notable births ({{by_nation.Scotland.rate|f1}} per 10,000 residents of its towns), then Wales ({{by_nation.Wales.rate|f1}}), Northern Ireland ({{by_nation.Northern Ireland.rate|f1}}) and England ({{by_nation.England.rate|f1}}). I cannot say how much of that is history and how much is how thoroughly each nation's people have been entered into Wikidata.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I queried Wikidata on {{meta.retrieved|date}} for every person whose place of birth is in the UK or one of its predecessor states. Towns are ONS built-up areas with Census 2021 populations for England and Wales (with London's boroughs merged into one London), NRS localities for Scotland and NISRA settlements for Northern Ireland. I matched each birthplace to a town by its coordinates, so two places called Newport cannot be confused by name, though a wrong link made by a Wikidata editor would still put someone in the wrong town. {{overview.n_coarse|int}} people are recorded as born in somewhere as broad as "England" or a county and could not be placed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Fame is the number of Wikimedia sites with a page on each person; page views come from English Wikipedia over {{meta.pv_days}} days for the three best-known people at each birthplace. Births from every century are set against today's population, which flatters old towns that have shrunk. A companion project, <a href="https://maps.tristanhotham.com/surname-birthplaces/">Has your surname left home?</a>, uses the same Wikidata births to follow surnames instead of places.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/famous-births/">Explore the interactive version</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23763157">Read the paper</a></div>
+<!-- /wp:button --><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/famous-births">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Notes and sources</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>People: <a href="https://www.wikidata.org/">Wikidata</a> (CC0), queried through the <a href="https://qlever.cs.uni-freiburg.de/">QLever</a> endpoint of the University of Freiburg.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Page views: English Wikipedia, {{meta.pv_days}} days to {{meta.pv_end|date}}, through the <a href="https://www.mediawiki.org/wiki/Extension:PageViewInfo">MediaWiki pageviews API</a>.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Populations: <a href="https://www.ons.gov.uk/">Office for National Statistics</a> built-up areas and Census 2021; <a href="https://www.nrscotland.gov.uk/publications/population-estimates-for-settlements-and-localities-in-scotland-mid-2020/">National Records of Scotland</a> settlements and localities, mid-2020; <a href="https://www.nisra.gov.uk/publications/ct0100-usual-resident-population-settlement-lgd2014-code-and-lgd2014-name-settlement">NISRA</a> Census 2021 settlements (all Open Government Licence v3.0).</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Place names: <a href="https://www.ordnancesurvey.co.uk/products/os-open-names">OS Open Names</a>, contains OS data © Crown copyright and database right 2026.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>Paper, data and code: <a href="https://doi.org/10.5281/zenodo.23763157">Zenodo</a> and <a href="https://github.com/Tristan-Hotham/famous-births">GitHub</a>.</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->

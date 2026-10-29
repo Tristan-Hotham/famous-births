@@ -1,0 +1,193 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\newfontfamily\headfont{Inter}[UprightFont=*-ExtraBold,BoldFont=*-ExtraBold,Extension=.otf,Path=/usr/share/fonts/opentype/inter/]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{graphicx,booktabs,float,caption,array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\usepackage{titlesec}
+\usepackage{setspace}
+\setstretch{1.05}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\titleformat{\section}{\headfont\Large}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\headfont\large}{\thesubsection}{0.8em}{}
+\captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
+\hypersetup{pdftitle={Born Here: Notable Births, Fame and Population in UK Towns and Cities, from Wikidata},pdfauthor={Tristan Hotham}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Born Here:\\[2pt] Notable Births, Fame and Population in UK Towns and Cities,\\[2pt] from Wikidata\par}
+\vspace{1.2em}
+{\large Tristan Hotham\par}
+\vspace{0.3em}
+{\small Independent researcher\\
+ORCID: 0000-0003-4931-9349\\
+DOI: \href{https://doi.org/10.5281/zenodo.23763157}{https://doi.org/10.5281/zenodo.23763157}\par}
+\vspace{0.8em}
+2026
+\end{center}
+
+\begin{quote}
+\small
+\begin{center}\textbf{Abstract}\end{center}
+Which towns produce more famous people than their size would suggest, and who is the most famous person born in each? I take every person in Wikidata whose recorded place of birth is in the United Kingdom ({{overview.n_people|int}} people) and match {{overview.n_placed|int}} of them, by the coordinates of their birthplace item, to {{overview.n_towns_with|int}} of {{overview.n_towns|int}} towns and cities with official populations: ONS built-up areas with Census 2021 counts for England and Wales, NRS localities for Scotland and NISRA settlements for Northern Ireland. Fame is measured by the number of Wikimedia sitelinks, checked against English Wikipedia page views. Notable births grow faster than population: across towns of 10,000 or more, the log-log slope is {{scaling.slope|f2}}. London holds {{london.share_pop|pct}} of the residents of these towns but {{london.share_births|pct}} of the matched births. Per head of today's population Scotland leads ({{by_nation.Scotland.rate|f1}} per 10,000) and England trails ({{by_nation.England.rate|f1}}). The ranking of towns depends strongly on era: for towns of 10,000 to 50,000, the rank correlation between births per head before 1900 and since 1950 is {{era_rank_corr|f2}}, and the post-1950 leaders are mostly towns with large hospitals, led by Bellshill. Births outside any counted town fall from {{page.rural_1800s|pct1}} of placed births in the 1800s to {{page.rural_1980|pct1}} since 1980. Women are {{overview.share_female_known|pct}} of the notable people overall and {{women_by_century.2000s|pct}} of those born since 2000. The note sets out the place-matching method and its failure modes, and argues that "born in" is a weak proxy for "from" in the hospital era.
+
+\textbf{Keywords:} Wikidata; notable people; birthplaces; fame; Wikipedia page views; urban scaling; hospital births; United Kingdom; towns; open data
+\end{quote}
+
+\section{Introduction}
+
+Most British towns claim a famous son or daughter, and many advertise them on signs, plaques and statues. The question here is comparative: across the whole of the United Kingdom, who is the most famous person born in each town, and which towns produce more notable people than their size would suggest? The question is popular, but it is also a small test of what large open knowledge bases can tell us about places. Wikidata, the collaborative knowledge base behind Wikipedia (Vrandečić and Krötzsch 2014), records a place of birth for hundreds of thousands of people, and has been used with similar biographical sources to map where notable people were born and died across history (Schich et al. 2014; Laouenan et al. 2022).
+
+Three things make the exercise harder than it looks. First, notability is not a random sample: it leans towards men, sport, politics and the professions, and Wikidata's coverage varies by group and country. Second, a birthplace in the hospital era is often the hospital town, not the home town. Third, birthplaces are recorded as items of very different kinds, from a London maternity hospital to the whole of England, and they have to be matched to a consistent set of towns with populations. I treat these as part of the findings rather than footnotes.
+
+The interactive version, with a search for any town and maps of fame, births per head, occupations and women's share, is at \url{https://maps.tristanhotham.com/famous-births/}. A companion study uses the same Wikidata births to follow surnames across Britain (\url{https://maps.tristanhotham.com/surname-birthplaces/}); this note is about places and fame instead.
+
+\section{Data}
+
+\subsection{People}
+
+I queried Wikidata on {{meta.retrieved|date}} through the QLever SPARQL endpoint (Bast and Buchhold 2017) for every human (P31 Q5) with a place of birth (P19) whose country (P17) is the United Kingdom or one of its predecessor states (the United Kingdom of Great Britain and Ireland, and the Kingdoms of England, Scotland and Great Britain). For each person I kept one birthplace, the number of distinct birthplaces, the earliest birth year (P569), sex (P21), occupations (P106), the number of Wikimedia sitelinks and the English Wikipedia article title. This gave {{overview.n_people|int}} people; {{overview.n_multi_birthplace|int}} have more than one birthplace recorded, of which one was used. {{overview.n_year_missing|int}} have no birth year and {{overview.n_sex_missing|int}} no recorded sex. For each birthplace item I kept its coordinates, English label, instance-of classes and whether it is a hospital (an instance of a subclass of hospital, Q16917).
+
+\subsection{Towns and populations}
+
+Towns are the denominators, so they need official populations. For England and Wales I used the ONS built-up areas of 2022 (BUA22), with Census 2021 usual residents summed over the LSOAs best-fitted to each area, and each area's centre and size from the ONS boundary file. The {{page.n_london_bua}} built-up areas inside Greater London are London boroughs; I merged them into one London, because most Wikidata births in London are recorded simply as "London", with a single point in Westminster. For Scotland I used the National Records of Scotland localities with mid-2020 population estimates, placed by matching the locality name to a Scottish built-up area or to an OS Open Names city, town or village of the same name in the same council area; {{meta.sc_unmatched}} small localities (together {{meta.sc_unmatched_pop|int}} people) could not be placed. For Northern Ireland I used the NISRA Census 2021 settlements of 500 or more residents (table CT0100), placed at a Wikidata settlement item of the same name; settlements listed in two parts, such as Lisburn City and Metropolitan Lisburn, were merged, and {{meta.ni_unmatched}} small settlements could not be placed. Table~\ref{tab:nations} summarises the result: {{overview.n_towns|int}} towns with {{overview.pop_total|int}} residents.
+
+{{TABLE_NATIONS}}
+
+\subsection{Fame}
+
+The main measure of fame is the number of Wikimedia sitelinks of the person's Wikidata item: the number of Wikipedia language editions and sister projects with a page about them. The median person in the data has {{overview.sitelinks_median}}; {{overview.n_sl20|int}} have 20 or more and {{overview.n_sl50|int}} have 50 or more. Sitelinks reward international reach and can be high for groups whose pages are created in many language editions, such as sportspeople. As a second measure I collected English Wikipedia page views through the MediaWiki API for the {{meta.pv_days}} days to {{meta.pv_end|date}}, for the three people with most sitelinks at each birthplace item ({{meta.pv_n|int}} articles). Page views measure current attention among English readers and are sensitive to news and anniversaries.
+
+\section{Methods}
+
+\subsection{Placing birthplaces in towns}
+
+A birthplace item is too coarse to place if it is the United Kingdom, one of its nations, a predecessor state, or a county, council area or district that is not also a settlement. This removes {{overview.n_coarse|int}} people, most of them recorded as born in "England", the "United Kingdom" or "Scotland". Every other birthplace with coordinates goes to a town in two steps. First, each town is drawn as a circle with the same area as its built-up area (or, where no area is known, a radius predicted from population by a log-log fit on England and Wales), centred both on the area's centre and on any OS Open Names place of the same name within 5 km; the birthplace joins the town whose circle, widened by 30 per cent of the radius or at least 1 km, contains it, choosing the smallest distance relative to the radius where several do. The second centre matters because built-up area centres are geometric centroids, which can sit kilometres from a historic town centre. Second, in England and Wales, a birthplace left over joins the built-up area of the nearest MSOA population-weighted centroid within 2 km. Of the people with usable birthplaces, {{overview.n_placed|int}} were placed ({{overview.share_placed|pct}} of all), {{overview.n_rural|int}} were in the countryside or in places too small to count, and {{overview.n_outside|int}} were outside the present United Kingdom, mostly in the Republic of Ireland before 1922.
+
+Wikidata links each person to a place item, not to a name, so the usual problem of ambiguous names (Newport, Richmond, Bangor) arises only if an editor linked the wrong item. That is not rare in principle: {{ambiguous.n_labels|int}} birthplace names in these data are shared by two or more items, and {{ambiguous.share|pct}} of placed births are at such a place. I did not audit these links.
+
+\subsection{Measures}
+
+Births per head are notable births divided by the town's population today, per 10,000 residents. They are computed for all births and separately for people born before 1900 and since 1950. Births across centuries set against today's population favour old towns that have since shrunk and penalise new ones; the era split shows how much this matters. The most famous person in a town is the one with most sitelinks (ties broken by page views, then by earlier birth), and the most read person is the one with most page views among the candidates. Occupations are grouped into eleven broad groups (footballers, other sport, politics and law, science and scholarship, writing, acting, music, visual arts, military, religion and business) by following Wikidata's subclass hierarchy from each occupation up to a set of root occupations; a person joins the group that holds most of their occupations, with ties broken in a fixed order, and people with no matching occupation are "other". Group capitals are the towns of 20,000 or more with most births in the group per 100,000 residents (at least five). Urban scaling is summarised by the slope of a least-squares fit of log births on log population for towns of 10,000 or more (Bettencourt et al. 2007 describe the general pattern for cities).
+
+\section{Results}
+
+\subsection{More than proportional}
+
+Notable births rise faster than population (Figure~\ref{fig:scaling}). Across {{scaling.n_towns|int}} towns of 10,000 or more, the slope of log births on log population is {{scaling.slope|f2}} (correlation {{scaling.r|f2}}): doubling a town's population goes with about {{page.scaling_factor|f1}} times as many notable births. The ten largest towns and cities have {{big10_share.pop|pct}} of the residents of all counted towns and {{big10_share.births|pct}} of the placed births. London alone has {{london.share_births|pct}} of placed births against {{london.share_pop|pct}} of residents; its share of births is {{london.by_century.1700s.london|pct}} for people born in the 1700s, {{london.by_century.1800s.london|pct}} in the 1800s and {{london.by_century.1900s.london|pct}} in the 1900s.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.82\textwidth]{f_scaling.png}
+\caption{Notable births against population today, towns of 10,000 or more, log scales. Dashed line: least-squares fit (slope {{scaling.slope|f2}}).}\label{fig:scaling}
+\end{figure}
+
+\subsection{Who is the most famous}
+
+Ranked by sitelinks, the most famous people born in the UK are {{most_famous_overall.0.name}} ({{most_famous_overall.0.town}}, {{most_famous_overall.0.sl}} sitelinks), {{most_famous_overall.1.name}} ({{most_famous_overall.1.sl}}, born at Woolsthorpe Manor, placed in {{most_famous_overall.1.town}}) and {{most_famous_overall.2.name}} ({{most_famous_overall.2.town}}, {{most_famous_overall.2.sl}}). Table~\ref{tab:cities} gives the most famous person by both measures for each city of 150,000 or more. Across the {{overview.n_towns_with|int}} towns with at least one placed birth, the most famous person is a footballer or other sportsperson in {{page.top_sport_share|pct}}, from science and scholarship in {{top_group_share.science|pct}}, from politics and law in {{top_group_share.politics|pct}} and a writer in {{top_group_share.writing|pct}}. Only {{top_women.share|pct}} of these town champions are women, and in {{top_since1950}} towns the most famous person was born in 1950 or later. The two measures pick the same person in {{pv_agree.share|pct}} of the {{pv_agree.n|int}} towns where both are available. Sitelinks favour sportspeople ({{fame_compare.sl.sport|pct}} of town winners against {{fame_compare.pv.sport|pct}} by page views) and scientists ({{fame_compare.sl.science|pct}} against {{fame_compare.pv.science|pct}}); page views favour actors ({{fame_compare.pv.acting|pct}} against {{fame_compare.sl.acting|pct}}) and people born since 1950 ({{fame_compare.pv.since1950|pct}} against {{fame_compare.sl.since1950|pct}}). Figure~\ref{fig:map} maps births per head and the best-known names.
+
+{{TABLE_CITIES}}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.78\textwidth]{f_map.png}
+\caption{Notable births per 10,000 residents today in UK towns and cities (colour) and number of births (circle area), with the person with most sitelinks for a selection of places that do not overlap.}\label{fig:map}
+\end{figure}
+
+\subsection{Per head, and the hospital effect}
+
+Among the {{per_head.n_big|int}} towns and cities of 50,000 or more, the highest rates are in {{per_head.big.0.name}} ({{per_head.big.0.rate|f1}} per 10,000), {{per_head.big.1.name}} ({{per_head.big.1.rate|f1}}), {{per_head.big.2.name}} ({{per_head.big.2.rate|f1}}), {{per_head.big.3.name}} ({{per_head.big.3.rate|f1}}) and {{per_head.big.4.name}} ({{per_head.big.4.rate|f1}}), against a median of {{per_head.big_median|f1}}. The lowest include post-war new towns: {{page.low_text}}. Among the {{per_head.n_mid|int}} towns of 10,000 to 50,000 the leader is {{per_head.mid.0.name}} ({{per_head.mid.0.rate|f1}}), with a median of {{per_head.mid_median|f1}}.
+
+The era split changes the picture (Figure~\ref{fig:rank}). For people born before 1900 the leading towns of 10,000 to 50,000 are {{per_head_era.mid_pre1900.0.name}}, {{per_head_era.mid_pre1900.1.name}}, {{per_head_era.mid_pre1900.2.name}}, {{per_head_era.mid_pre1900.3.name}} and {{per_head_era.mid_pre1900.4.name}}: county, cathedral, port and university towns. For people born since 1950 they are {{per_head_era.mid_since1950.0.name}}, {{per_head_era.mid_since1950.1.name}}, {{per_head_era.mid_since1950.2.name}}, {{per_head_era.mid_since1950.3.name}} and {{per_head_era.mid_since1950.4.name}}. The Spearman correlation between the two rankings is {{era_rank_corr|f2}}. Across all towns, {{since1950_share.national|pct}} of placed births with a known year are since 1950; among towns under 50,000 with at least 50 births the share is highest in {{since1950_share.top.0.name}} ({{since1950_share.top.0.share|pct}}), {{since1950_share.top.1.name}} ({{since1950_share.top.1.share|pct}}), {{since1950_share.top.2.name}} ({{since1950_share.top.2.share|pct}}), {{since1950_share.top.3.name}} ({{since1950_share.top.3.share|pct}}) and {{since1950_share.top.4.name}} ({{since1950_share.top.4.share|pct}}). Several of these towns have, or had, large hospitals with maternity units serving a wide area; I have not linked hospital records, so this is an interpretation, not a measurement. Bellshill, the most extreme case, has {{page.bellshill_n|int}} notable births for {{page.bellshill_pop|int}} residents, {{page.bellshill_post|pct}} of them since 1950.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.86\textwidth]{f_rank.png}
+\caption{Notable births per 10,000 residents today, towns of 10,000 to 50,000: the top ten for people born before 1900 (left) and since 1950 (right).}\label{fig:rank}
+\end{figure}
+
+The move into hospitals is visible in the whole data set too (Figure~\ref{fig:rural}). Of placed births with coordinates in the UK, the share outside any counted town falls from {{rural_by_era.before 1800.share_rural|pct1}} for people born before 1800 to {{page.rural_1800s|pct1}} in the 1800s, {{rural_by_era.1900 to 1949.share_rural|pct1}} for 1900 to 1949 and {{page.rural_1980|pct1}} since 1980. Only {{overview.n_hospital|int}} people have a hospital as their Wikidata birthplace, so the hospital itself is almost never recorded: the town is.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.78\textwidth]{f_rural.png}
+\caption{Share of births with UK coordinates that fall outside any counted town, by period of birth.}\label{fig:rural}
+\end{figure}
+
+\subsection{Occupations}
+
+Sport is the largest group: footballers are {{groups.footballer.share|pct}} of all people and other sportspeople {{groups.sport.share|pct}}. Science and scholarship are {{groups.science.share|pct}}, writing {{groups.writing.share|pct}}, politics and law {{groups.politics.share|pct}}, acting {{groups.acting.share|pct}} and music {{groups.music.share|pct}}; {{groups.other.share|pct}} have no occupation that matches a group. The mix shifts across centuries (Figure~\ref{fig:groups}): the military is {{group_by_century.1700s.military|pct}} of people born in the 1700s and {{group_by_century.1900s.military|pct}} of those born in the 1900s, religion {{group_by_century.1700s.religion|pct}} and {{group_by_century.1900s.religion|pct}}, while footballers rise from {{group_by_century.1800s.footballer|pct}} in the 1800s to {{group_by_century.1900s.footballer|pct}} in the 1900s. Per head, the footballer capitals are {{group_capitals.footballer.0.name}}, {{group_capitals.footballer.1.name}} and {{group_capitals.footballer.2.name}}; for other sport {{group_capitals.sport.0.name}} and {{group_capitals.sport.1.name}}; for science and scholarship the university cities {{group_capitals.science.0.name}}, {{group_capitals.science.1.name}}, {{group_capitals.science.2.name}} and {{group_capitals.science.3.name}}; for the military the Clyde towns {{group_capitals.military.0.name}}, {{group_capitals.military.1.name}} and {{group_capitals.military.2.name}} (Table~\ref{tab:caps}).
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.84\textwidth]{f_groups.png}
+\caption{Occupation groups of notable people by century of birth (share of each century's births; number of people in brackets).}\label{fig:groups}
+\end{figure}
+
+{{TABLE_CAPS}}
+
+\subsection{Women}
+
+Women are {{overview.share_female_known|pct}} of the people with a recorded sex. By century of birth the share is {{women_by_century.1600s|pct}} in the 1600s, {{women_by_century.1700s|pct}} in the 1700s, {{women_by_century.1800s|pct}} in the 1800s, {{women_by_century.1900s|pct}} in the 1900s and {{women_by_century.2000s|pct}} since 2000 (Figure~\ref{fig:women}). Among people with 50 or more sitelinks it is {{women_famous.share|pct}}. By group it ranges from {{page.w_footballer|pct}} for footballers to {{women_by_group.acting|pct}} in acting and {{women_by_group.writing|pct}} in writing. By nation, women's share is lowest in Scotland ({{by_nation.Scotland.share_women|pct}}) and highest in England ({{by_nation.England.share_women|pct}}).
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.78\textwidth]{f_women.png}
+\caption{Women's share of notable births by decade of birth, decades with at least 200 people with a recorded sex.}\label{fig:women}
+\end{figure}
+
+\subsection{Nations}
+
+Per head of today's population, Scotland has {{by_nation.Scotland.rate|f1}} placed notable births per 10,000 residents of its towns, Wales {{by_nation.Wales.rate|f1}}, Northern Ireland {{by_nation.Northern Ireland.rate|f1}} and England {{by_nation.England.rate|f1}}, with London at {{london.rate|f1}}. These data cannot separate history from coverage: Wikidata's lists of some groups are far more complete for some nations and leagues than others, and the Scottish denominators come from a different statistical geography (NRS localities) from those for England and Wales.
+
+\section{Discussion}
+
+Three findings seem robust to the choices made here. Notable births concentrate in large places more than population does; London's share is far above its share of residents in every century. The ranking of towns per head is unstable across eras, and for births since 1950 it largely measures where hospitals are. And the most famous person in a town depends on how fame is measured: sitelinks favour sportspeople and scientists with international reach, page views favour actors and the recently born.
+
+The hospital effect deserves emphasis because it is easy to miss. A town that hosts a regional maternity unit collects the births of a whole district; a new town without one loses its own children to the hospital down the road. Before 1900 the problem is smaller but the denominators are worse, because today's population says little about a town's size two centuries ago. Neither era gives a clean measure of where talent "comes from". What the data do give is a consistent, open and repeatable picture of where the notable people that Wikidata knows about were recorded as born.
+
+\section{Limitations}
+
+Notability in Wikidata follows Wikipedia and other databases and is skewed by sex, class, occupation and nation. Births across all centuries are set against populations from 2020 and 2021. Birthplace items are entered by volunteers; I did not audit them, and a share of births sit at places whose names are shared with other places. The matching uses circles, not boundaries, and can misplace births at the edges of towns, in suburbs that are their own built-up areas, and where built-up area centres are far from historic centres. London is treated as one place. Scotland's populations are mid-2020 estimates for NRS localities and some small localities and Northern Irish settlements could not be placed. Page views cover {{meta.pv_days}} days and only the three people with most sitelinks at each birthplace. Occupation groups are coarse and depend on how Wikidata's occupation classes are arranged. People are named in the outputs only as the most famous or most read person in a town; all are public figures with Wikipedia articles.
+
+\section{Conclusion}
+
+Using open Wikidata, ONS, NRS and NISRA data, it is possible to name the most famous person born in nearly every UK town and to measure which towns produce more notable people than their size would suggest. The results are lively but should be read with two cautions: notable is not typical, and in the hospital era born in is not from.
+
+\section*{Data and code availability}
+
+The data on towns (populations, births by era, group and century, most famous and most read person), the analysis code and this paper are available at \url{https://github.com/Tristan-Hotham/famous-births} and archived at \url{https://doi.org/10.5281/zenodo.23763157}. The interactive version is at \url{https://maps.tristanhotham.com/famous-births/}. Code is released under the MIT licence; data, text and figures under CC BY 4.0, with the source credits below.
+
+\section*{AI statement}
+
+I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.
+
+\section*{References}
+\small
+\setlength{\parskip}{0.35em}
+
+Bast, H. and Buchhold, B. (2017) QLever: a query engine for efficient SPARQL+Text search. In \emph{Proceedings of the 2017 ACM Conference on Information and Knowledge Management (CIKM)}. \url{https://qlever.cs.uni-freiburg.de/}
+
+Bettencourt, L. M. A., Lobo, J., Helbing, D., Kühnert, C. and West, G. B. (2007) Growth, innovation, scaling, and the pace of life in cities. \emph{Proceedings of the National Academy of Sciences}, 104(17), 7301 to 7306.
+
+Laouenan, M., Bhargava, P., Eyméoud, J.-B., Gergaud, O., Plique, G. and Wasmer, E. (2022) A cross-verified database of notable people, 3500BC to 2018AD. \emph{Scientific Data}, 9, 290.
+
+National Records of Scotland (2022) Population estimates for settlements and localities in Scotland, mid-2020. \url{https://www.nrscotland.gov.uk/publications/population-estimates-for-settlements-and-localities-in-scotland-mid-2020/} (Open Government Licence v3.0).
+
+Northern Ireland Statistics and Research Agency (2024) Census 2021 commissioned table CT0100: usual resident population by settlement. \url{https://www.nisra.gov.uk/publications/ct0100-usual-resident-population-settlement-lgd2014-code-and-lgd2014-name-settlement} (Open Government Licence v3.0).
+
+Office for National Statistics. Built-up areas (2022), Census 2021 table TS001 (usual residents) and LSOA and MSOA lookups to built-up areas. \url{https://www.ons.gov.uk/} (Open Government Licence v3.0).
+
+Ordnance Survey. OS Open Names. \url{https://www.ordnancesurvey.co.uk/products/os-open-names} (Open Government Licence v3.0).
+
+Schich, M., Song, C., Ahn, Y.-Y., Mirsky, A., Martino, M., Barabási, A.-L. and Helbing, D. (2014) A network framework of cultural history. \emph{Science}, 345(6196), 558 to 562.
+
+Vrandečić, D. and Krötzsch, M. (2014) Wikidata: a free collaborative knowledgebase. \emph{Communications of the ACM}, 57(10), 78 to 85.
+
+Wikidata (2026) Retrieved {{meta.retrieved|date}} through the QLever SPARQL endpoint. \url{https://www.wikidata.org/} (CC0 1.0).
+
+Wikimedia Foundation. Pageviews data through the MediaWiki Action API (prop=pageviews). \url{https://www.mediawiki.org/wiki/Extension:PageViewInfo} (CC0 1.0).
+
+\end{document}
